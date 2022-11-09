@@ -3,7 +3,7 @@ const { Model, DataTypes } = require('sequelize');
 class EventsClients extends Model {
 	static init(sequelize) {
 	  super.init({
-		payment_method: DataTypes.INTEGER,
+		payment_method: DataTypes.STRING,
 		deleted_at: DataTypes.DATE,
 	  }, {
 		sequelize,
@@ -12,8 +12,8 @@ class EventsClients extends Model {
 	}
 
 	static associate(models) {
-	  this.belongsTo(models.Event, { foreignKey: 'event_id', as: 'eventManager' });
-	  this.belongsTo(models.Client, { foreignKey: 'client_id', as})
+	  this.belongsTo(models.Event, { foreignKey: 'event_id' });
+	  this.belongsTo(models.Client, { foreignKey: 'client_id' })
 	}
   }
 

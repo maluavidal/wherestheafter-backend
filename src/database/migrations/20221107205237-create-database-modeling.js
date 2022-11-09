@@ -4,6 +4,11 @@ module.exports = {
 		try {
 			await Promise.all([
 				queryInterface.createTable('event_managers', {
+					is_admin: {
+						type: Sequelize.BOOLEAN,
+						defaultValue: false,
+						allowNull: true,
+					},
 					id: {
 						type: Sequelize.INTEGER,
 						allowNull: false,
