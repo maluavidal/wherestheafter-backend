@@ -14,7 +14,7 @@ class Event extends Model {
 	}
 
 	static associate(models) {
-	  this.belongsTo(models.EventManager, { foreignKey: 'event_manager_id', as: 'eventManager' });
+	  this.belongsTo(models.User, { foreignKey: 'user_id' });
 	}
   }
 

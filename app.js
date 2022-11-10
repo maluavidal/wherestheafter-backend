@@ -5,6 +5,8 @@ dotenv.config();
 import './src/database/index';
 
 import express from 'express';
+
+import { UserRoutes } from './src/routes'
 // import { resolve } from 'path';
 
 // importar rotas
@@ -21,7 +23,11 @@ class App {
 	}
 
 	routes() {
-
+		this.app.use('/users', UserRoutes);
+		// this.app.use('/users', UserRoutes);
+		// this.app.use('/users', UserRoutes);
+		// this.app.use('/users', UserRoutes);
+		// this.app.use('/users', UserRoutes);
 	}
 }
 

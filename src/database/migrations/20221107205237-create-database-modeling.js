@@ -3,12 +3,7 @@ module.exports = {
 		const transaction = await queryInterface.sequelize.transaction();
 		try {
 			await Promise.all([
-				queryInterface.createTable('event_managers', {
-					is_admin: {
-						type: Sequelize.BOOLEAN,
-						defaultValue: false,
-						allowNull: true,
-					},
+				queryInterface.createTable('users', {
 					id: {
 						type: Sequelize.INTEGER,
 						allowNull: false,
@@ -30,6 +25,16 @@ module.exports = {
 						type: Sequelize.STRING,
 						allowNull: false,
 					},
+					is_admin: {
+						type: Sequelize.BOOLEAN,
+						defaultValue: false,
+						allowNull: false
+					},
+					is_event_manager: {
+						type: Sequelize.BOOLEAN,
+						defaultValue: false,
+						allowNull: false
+					},
 					created_at: {
 						type: Sequelize.DATE,
 						allowNull: false,
@@ -40,7 +45,7 @@ module.exports = {
 					},
 					deleted_at: {
 						type: Sequelize.DATE,
-						allowNull: false,
+						allowNull: true,
 						defaultValue: null,
 
 					},
@@ -78,7 +83,7 @@ module.exports = {
 					},
 					deleted_at: {
 						type: Sequelize.DATE,
-						allowNull: false,
+						allowNull: true,
 						defaultValue: null,
 
 					},
@@ -100,11 +105,11 @@ module.exports = {
 					type: Sequelize.TEXT,
 					allowNull: false,
 				},
-				event_manager_id: {
+				user_id: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
 					references: {
-						model: 'event_managers',
+						model: 'users',
 						key: 'id',
 					},
 				},
@@ -152,7 +157,7 @@ module.exports = {
 				},
 				deleted_at: {
 					type: Sequelize.DATE,
-					allowNull: false,
+					allowNull: true,
 					defaultValue: null,
 				},
 			}, { transaction });
@@ -191,7 +196,7 @@ module.exports = {
 				},
 				deleted_at: {
 					type: Sequelize.DATE,
-					allowNull: false,
+					allowNull: true,
 					defaultValue: null,
 				},
 			}, { transaction });
@@ -214,7 +219,7 @@ module.exports = {
 			await queryInterface.dropTable('events', { transaction });
 
 			await Promise.all([
-				queryInterface.dropTable('event_managers', { transaction }),
+				queryInterface.dropTable('users', { transaction }),
 				queryInterface.dropTable('clients', { transaction }),
 			]);
 
