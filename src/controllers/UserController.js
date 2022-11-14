@@ -1,21 +1,30 @@
-import User from "../models/User";
+import BaseController from './BaseController';
+import UserService from "../service/UserService";
 
-class UserController {
-	async index(req, res) {
-		const users = await User.findAll({
-			attributes: ['id', 'name', 'email', 'is_admin'],
-			order: [['id', 'ASC']]
-		});
+class UserController extends BaseController {
+	// async index(req, res) {
+	// 	const users = await User.findAll({
+	// 		attributes: ['id', 'name', 'email', 'is_admin'],
+	// 		order: [['id', 'ASC']]
+	// 	});
 
-		res.json(users);
+	// 	res.json(users);
+	// }
+
+	constructor() {
+		super();
+
+		this.store = this.store.bind(this);
 	}
 
 	async store(req, res) {
-		console.log(req.userInfo, 'req.userInfo');
-
-		res.json({
-			user: req.userInfo
-		})
+		try {
+			const user = await UserService.store(req.data);
+			console.log(user);
+			return this.handleSuccess(res, user);
+		} catch (error) {
+			return this.handleError(res, error);
+		}
 	}
 }
 

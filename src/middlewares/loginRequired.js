@@ -3,6 +3,7 @@ import { User } from '../models';
 import bcryptjs from 'bcrypt';
 
 export default async (req, res, next) => {
+	next()
 	// const adminPassword = await bcryptjs.hash('malufull', 8);
 	// console.log(adminPassword)
   const { authorization } = req.headers;

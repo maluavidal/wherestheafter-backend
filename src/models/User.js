@@ -1,11 +1,13 @@
+import bcryptjs from 'bcryptjs';
 const { Model, DataTypes } = require('sequelize');
 
-class User extends Model {
+export default class User extends Model {
 	static init(sequelize) {
 	  super.init({
 		name: DataTypes.STRING,
 		email: DataTypes.STRING,
-		password: DataTypes.STRING,
+		password: DataTypes.VIRTUAL,
+		password_hash: DataTypes.STRING,
 		deleted_at: DataTypes.DATE,
 		is_admin: {
 			type: DataTypes.BOOLEAN,
@@ -16,8 +18,19 @@ class User extends Model {
 		sequelize,
 		paranoid: true,
 		tableName: 'users'
-	  })
-	  }
+	  });
+
+	  this.addHook('beforeSave', async (user) => {
+		if (user.password) {
+		  user.password_hash = await bcryptjs.hash(user.password, 8);
+		}
+	  });
+
+	  return this;
 	}
 
-  module.exports = User;
+	checkPassword(password) {
+		return bcryptjs.compare(password, this.password_hash);
+	}
+
+}

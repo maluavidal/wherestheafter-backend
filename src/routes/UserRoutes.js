@@ -1,16 +1,15 @@
-
-import { Router } from 'express';
 import userController from '../controllers/UserController';
+import userSchema from '../schema/UserSchema';
+import BaseRoute from './BaseRoute';
 
-import loginRequired from '../middlewares/loginRequired';
+// import loginRequired from '../middlewares/loginRequired';
 
-const router = new Router();
+class UserRoutes extends BaseRoute {
+	setup() {
+		this.router.post('/', this.SchemaValidator.Validate(userSchema.store), userController.store);
 
-// if isAdmin
-router.get('/', userController.index);
-// router.get('/:id', userController.show);
-router.post('/', loginRequired, userController.store);
-// router.put('/', loginRequired, userController.update);
-// router.delete('/:id', loginRequired, userController.delete);
+		return this.router;
+	}
+}
 
-export default router;
+export default new UserRoutes();

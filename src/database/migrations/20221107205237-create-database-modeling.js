@@ -20,10 +20,11 @@ module.exports = {
 							isEmail: true,
 						},
 						allowNull: false,
+						unique: true,
 					},
-					password: {
+					password_hash: {
 						type: Sequelize.STRING,
-						allowNull: false,
+						allowNull: false
 					},
 					is_admin: {
 						type: Sequelize.BOOLEAN,

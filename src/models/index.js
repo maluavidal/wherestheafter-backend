@@ -1,5 +1,9 @@
-import User from './User';
+import User from "./User";
+import Event from "./Event";
+import Client from "./Client";
 
 export {
-	User
+	User,
+	Event,
+	Client
 }
