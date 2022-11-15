@@ -26,14 +26,8 @@ module.exports = {
 						type: Sequelize.STRING,
 						allowNull: false
 					},
-					is_admin: {
-						type: Sequelize.BOOLEAN,
-						defaultValue: false,
-						allowNull: false
-					},
-					is_event_manager: {
-						type: Sequelize.BOOLEAN,
-						defaultValue: false,
+					type: {
+						type: Sequelize.STRING(13),
 						allowNull: false
 					},
 					created_at: {

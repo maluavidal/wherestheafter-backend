@@ -3,7 +3,7 @@ import ClientRoutes from './ClientRoutes';
 import SessionRoutes from './SessionRoutes';
 
 export {
-    UserRoutes,
+	UserRoutes,
 	ClientRoutes,
-	SessionRoutes,
+	SessionRoutes
 }

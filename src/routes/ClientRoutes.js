@@ -4,17 +4,14 @@ import BaseRoute from './BaseRoute';
 
 class ClientRoutes extends BaseRoute {
 	setup() {
+		this.router.get('/', clientController.index);
+		this.router.get('/:id', clientController.show);
+		this.router.put('/:id', clientController.update);
+		this.router.delete('/:id', clientController.delete);
 		this.router.post('/', this.SchemaValidator.Validate(ClientSchema.store), clientController.store);
 
 		return this.router;
 	}
 }
-
-
-// router.get('/', clientController.index);
-// // router.get('/:id', clientController.show);
-// router.post('/', SchemaValidator.Validate(ClientSchema.store), clientController.store);
-// // router.put('/:id', clientController.update);
-// // router.delete('/:id', clientController.delete);
 
 export default new ClientRoutes();

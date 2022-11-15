@@ -1,114 +1,69 @@
-import { User } from '../models';
-import Client from '../models/Client';
 import BaseController from './BaseController';
-import clientService from '../service/ClientService';
 import ClientService from '../service/ClientService';
 
 class ClientController extends BaseController {
 	constructor() {
 		super();
 
-		// this.store = this.index.bind(this);
-		// this.store = this.show.bind(this);
-		this.store = this.store.bind(this);
-		// this.store = this.update.bind(this);
-		// this.store = this.delete.bind(this);
+		this.bindActions(['index', 'show', 'store', 'update', 'delete']);
 	};
 
-    // async index(req, res) {
-    //     const clients = await Client.findAll({
-    //         order: [['id', 'ASC']]
-    //     });
+    async index(req, res) {
+        try {
+			const clients = await ClientService.list();
 
-	// 	const clientAmount = await Client.count();
+			return this.handleSuccess(res, clients);
+		} catch (error) {
+			return this.handleError(res, error);
+		}
+    };
 
-	// 	console.log(clientAmount, 'clientAmount');
+    async show(req, res) {
+        try {
+			const client = await ClientService.show(req.params.id);
 
-    //     const userIsAdmin = await User.findAll({
-    //         where: { is_admin: true }
-    //     });
-
-    //     const userIsEventManager = await User.findAll({
-    //         where: { is_admin: false }
-    //     });
-
-    //     if (userIsAdmin) {
-    //         return res.json(clients);
-    //     } else if (userIsEventManager) {
-    //         return res.json(clientAmount);
-    //     } else {
-    //         return res.status(401).json('Access denied.')
-    //     }
-    // }
-
-    // async show(req, res) {
-    //     const { client_id } = req.params;
-
-    //     const client = await Client.findByPk(client_id);
-
-    //     if (!client) {
-    //         return res.status(400).json({ error: 'Client is not existent' });
-    //     };
-
-    //     return res.json(client);
-    // };
-
-    // async update(res, req) {
-    //     const { client_id } = req.params;
-
-    //     const client = await Client.findByPk(client_id);
-
-    //     const schema = Yup.object().shape({
-    //         name: Yup.string(),
-    //         cpf: Yup.string(),
-    //         email: Yup.string().email(),
-    //         born_at: Yup.date(),
-    //         deleted_at: Yup.date()
-    //     });
-
-    //     if (!(await schema.isValid(req.body))) {
-    //         return res.status(400).json({ error: 'Validation failed.' })
-    //     };
-    // }
+			return this.handleSuccess(res, client);
+		} catch (error) {
+			return this.handleError(res, error);
+		}
+    };
 
     async store(req, res) {
 		try {
-
 			const client = await ClientService.store(req.data);
 
 			return this.handleSuccess(res, client);
 		} catch (error) {
 			return this.handleError(res, error);
 		}
-
     };
 
-    // async delete(req, res) {
-    //     const { client_id } = req.params;
+	async update(req, res) {
+	    try {
+			const options = {
+				changes: req.body,
+				filter:{
+					id: req.params.id
+				}
+			};
 
-    //     const client = Client.findByPk(client_id);
+			const client = await ClientService.update(options);
 
-    //     const userIsAdmin = await User.findAll({
-    //         where: { is_admin: true }
-    //     });
+			return this.handleSuccess(res, client);
+		} catch (error) {
+			return this.handleError(res, error);
+		}
+	}
 
-    //     if (userIsAdmin) {
-    //         if (!client) {
-    //             return res.status(400).json({ error: 'Client is not existent' });
-    //         };
+    async delete(req, res) {
+        try {
+			await ClientService.delete(req.params.id);
 
-    //         if (client.user_id !== req.userId) {
-    //             return res.status(401).json({ error: 'Unauthorized requisition' });
-    //         };
-
-    //         await client.destroy();
-    //         return res.json(client);
-    //     } else {
-    //         return res.status(401).json('Access denied.')
-    //     };
-
-
-    // }
+			return this.handleSuccess(res, true);
+		} catch (error) {
+			return this.handleError(res, error);
+		}
+    }
 }
 
 export default new ClientController();
