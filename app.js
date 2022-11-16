@@ -9,7 +9,10 @@ import express from 'express';
 import { UserRoutes } from './src/routes';
 import { ClientRoutes } from './src/routes';
 import { SessionRoutes } from './src/routes';
-// import { resolve } from 'path';
+import { EventRoutes } from './src/routes';
+import { EventsClientsRoutes } from './src/routes';
+
+ // import { resolve } from 'path';
 
 class App {
 	constructor() {
@@ -27,11 +30,8 @@ class App {
 		this.app.use('/clients', ClientRoutes.setup());
 		this.app.use('/session', SessionRoutes.setup());
 		this.app.use('/users', UserRoutes.setup());
-
-
-		// this.app.use('/users', UserRoutes);
-		// this.app.use('/token', SessionRoutes);
-		// this.app.use('/users', UserRoutes);
+		this.app.use('/events', EventRoutes.setup());
+		this.app.use('/eventsclients', EventsClientsRoutes.setup());
 		// this.app.use('/users', UserRoutes);
 	}
 }

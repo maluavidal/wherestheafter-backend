@@ -3,8 +3,9 @@ import databaseConfig from '../config/database.js';
 
 import User from '../models/User.js';
 import Client from '../models/Client.js';
+import Event from '../models/Event.js';
 
-const models = [User, Client];
+const models = [User, Client, Event];
 
 class Database {
   constructor(){
@@ -12,13 +13,10 @@ class Database {
   }
 
   init() {
-	// console.log(databaseConfig);
     this.connection = new Sequelize(databaseConfig.development);
 
     models
       .map(model => {
-		console.log(model.init);
-
 		return model.init(this.connection)
 	  })
       .map(model => {

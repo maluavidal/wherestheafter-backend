@@ -15,3 +15,5 @@ export default class Client extends Model {
 	  return this;
 	}
 }
+
+module.exports = Client;

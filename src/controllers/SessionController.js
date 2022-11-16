@@ -10,8 +10,8 @@ class SessionController extends BaseController {
 
 	async store(req, res) {
 		try {
-
 			const token = await SessionService.store(req.data);
+
 			return this.handleSuccess(res, token);
 		} catch (error) {
 			return this.handleError(res, error);

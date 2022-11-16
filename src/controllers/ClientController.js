@@ -20,7 +20,7 @@ class ClientController extends BaseController {
 
     async show(req, res) {
         try {
-			const client = await ClientService.show(req.params.id);
+			const client = await ClientService.show(req.filter.id);
 
 			return this.handleSuccess(res, client);
 		} catch (error) {

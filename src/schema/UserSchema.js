@@ -7,6 +7,18 @@ const schema = {
             email: Yup.string().email().required(),
 			password: Yup.string().required()
 		}).noUnknown(),
+	},
+
+	show: {
+		params: Yup.object().shape({
+            id: Yup.number().integer().required(),
+		}).noUnknown(),
+	},
+
+	delete: {
+		params: Yup.object().shape({
+            id: Yup.number().integer().required(),
+		}).noUnknown(),
 	}
 }
 

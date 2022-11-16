@@ -1,12 +1,17 @@
-import { Router } from 'express';
-import eventsClientsController from '../controllers/EventsClientsController';
+import EventsClientsController from '../controllers/EventsClientsController';
+// import ClientSchema from '../schema/ClientSchema';
+import BaseRoute from './BaseRoute';
 
-const router = new Router();
+class EventsClientsRoutes extends BaseRoute {
+	setup() {
+		this.router.get('/', EventsClientsController.index);
+		this.router.get('/:id', EventsClientsController.show);
+		this.router.put('/:id', EventsClientsController.update);
+		this.router.delete('/:id', EventsClientsController.delete);
+		this.router.post('/', EventsClientsController.store);
 
-router.get('/', eventsClientsController.index);
-router.get('/:id', eventsClientsController.show);
-router.post('/', eventsClientsController.store);
-router.put('/:id', eventsClientsController.update);
-router.delete('/:id', eventsClientsController.delete);
+		return this.router;
+	}
+}
 
-export default router;
+export default new EventsClientsRoutes();

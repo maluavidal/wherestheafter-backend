@@ -5,10 +5,10 @@ import userController from '../controllers/UserController';
 class UserRoutes extends BaseRoute {
 	setup() {
 		this.router.get('/', userController.index);
-		this.router.get('/', userController.show);
+		this.router.get('/:id', this.SchemaValidator.Validate(userSchema.show), userController.show);
 		this.router.post('/', this.SchemaValidator.Validate(userSchema.store), userController.store);
-		this.router.put('/', userController.update);
-		this.router.delete('/', userController.delete);
+		this.router.put('/:id', userController.update);
+		this.router.delete('/:id', this.SchemaValidator.Validate(userSchema.delete), userController.delete);
 
 		return this.router;
 	}

@@ -4,9 +4,15 @@ const schema = {
 	store: {
 		body: Yup.object().shape({
             name: Yup.string().required(),
-            cpf: Yup.string().required(),
-            email: Yup.string().email().required(),
-            born_at: Yup.date().required(),
+            about: Yup.string(),
+            starts_at: Yup.date().required(),
+            ends_at: Yup.date(),
+			min_age: Yup.number().integer(),
+			address_cep: Yup.string(),
+			address: Yup.string().required(),
+			address_city: Yup.string().required(),
+			thumb_url: Yup.string(),
+			price: Yup.number()
 		}).noUnknown(),
 	},
 

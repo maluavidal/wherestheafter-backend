@@ -1,7 +1,9 @@
-import BaseController from './BaseController';
-import UserService from "../service/UserService";
+import PhotoController from './PhotoController';
+import PhotoService from "../service/PhotoService";
 
-class UserController extends BaseController {
+// const upload = multer(multerConfig).single('file');
+
+class UserController extends PhotoController {
 
 	constructor() {
 		super();
@@ -11,7 +13,7 @@ class UserController extends BaseController {
 
 	async index(req, res) {
 		try {
-			const users = await UserService.list();
+			const users = await PhotoService.list();
 
 			return this.handleSuccess(res, users);
 		} catch (error) {
@@ -21,7 +23,7 @@ class UserController extends BaseController {
 
 	async show(req, res) {
 		try {
-			const user = await UserService.show(req.params.id);
+			const user = await PhotoService.show(req.params);
 
 			return this.handleSuccess(res, user);
 		} catch (error) {
@@ -31,26 +33,18 @@ class UserController extends BaseController {
 
 	async store(req, res) {
 		try {
-			const user = await UserService.store(req.data);
+			const user = await PhotoService.store(req.data);
 
 			return this.handleSuccess(res, user);
 		} catch (error) {
-			console.log(error);
-
 			return this.handleError(res, error);
 		}
 	}
 
 	async update(req, res) {
 		try {
-			const options = {
-				changes: req.body,
-				filter:{
-					id: req.params.id
-				}
-			};
+			const user = await PhotoService.update(req.params);
 
-			const user = await UserService.update(options);
 			return this.handleSuccess(res, user);
 		} catch (error) {
 			return this.handleError(res, error);
@@ -60,11 +54,12 @@ class UserController extends BaseController {
 
 	async delete(req, res) {
 		try {
-			await UserService.delete(req.params.id);
+			const user = await PhotoService.delete(req.params);
 
-			return this.handleSuccess(res, true);
+			return this.handleSuccess(res, user);
 		} catch (error) {
 			return this.handleError(res, error);
+
 		}
 	}
 }

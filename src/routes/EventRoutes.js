@@ -1,14 +1,17 @@
-import { Router } from 'express';
 import eventController from '../controllers/EventController';
+import EventSchema from '../schema/EventSchema';
+import BaseRoute from './BaseRoute';
 
-import loginRequired from '../middlewares/loginRequired';
+class EventRoutes extends BaseRoute {
+	setup() {
+		this.router.get('/', eventController.index);
+		this.router.get('/:id', eventController.show);
+		this.router.put('/:id', eventController.update);
+		this.router.delete('/:id', eventController.delete);
+		this.router.post('/', eventController.store);
 
-const router = new Router();
+		return this.router;
+	}
+}
 
-router.get('/', eventController.index);
-router.get('/:id', eventController.show);
-router.post('/', loginRequired, eventController.store);
-router.put('/:id', loginRequired, eventController.update);
-router.delete('/:id', loginRequired, eventController.delete);
-
-export default router;
+export default new EventRoutes();
