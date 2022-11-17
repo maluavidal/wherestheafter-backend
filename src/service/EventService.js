@@ -1,37 +1,45 @@
-import { Event } from "../models";
+import { Event, Thumb } from "../models";
 
 class EventService {
 	async list() {
-		return Event.findAll({
+		// estudar scope
+		return Event.scope('withThumb').findAll({
 			order: [['id', 'ASC']]
 		});
 	};
 
 	async show(id) {
-		const event = {
+		return Event.scope('withThumb').findOne({
 			where: {
 				id
 			}
-		};
-
-		return Event.findOne(event);
+		});
 	};
 
-	async store(data) {
+	async store({ event, file }) {
 		try {
 			const dataCreate = {
-				...data,
-				starts_at: new Date(data.starts_at)
+				...event,
+				starts_at: new Date(event.starts_at)
+			};
+
+			if (file) {
+				const fileCreated = await Thumb.create({
+					file_name: file.filename,
+					original_name: file.originalname,
+					url: file.path
+				}, { returning: true });
+
+				dataCreate.thumb_id = fileCreated.id;
 			}
-			console.log(dataCreate, 'data mp servoc')
+
 			return Event.create(dataCreate);
 		} catch(err) {
 			console.log(err, 'err')
 		}
-
 	};
 
-	async update({ changes, filter }) {
+	update({ changes, filter }) {
 		return Event.update(changes, {
 			where: {
 				id: filter.id,

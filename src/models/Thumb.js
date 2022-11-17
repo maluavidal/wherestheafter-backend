@@ -1,4 +1,4 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, Sequelize } from 'sequelize';
 import appConfig from '../config/appConfig';
 
 export default class Thumb extends Model {
@@ -27,7 +27,7 @@ export default class Thumb extends Model {
         get() {
           return `${appConfig.url}/images/${this.getDataValue('filename')}`;
         },
-      },
+      }
     }, {
       sequelize,
 	  paranoid: true,
@@ -35,9 +35,5 @@ export default class Thumb extends Model {
     });
 
     return this;
-  }
-
-  static associate(models) {
-    this.belongsTo(models.Event, { foreignKey: 'event_id' });
   }
 }

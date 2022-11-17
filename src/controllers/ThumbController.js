@@ -1,8 +1,6 @@
 import BaseController from './BaseController';
 import ThumbService from "../service/ThumbService";
 
-// const upload = multer(multerConfig).single('file');
-
 class ThumbController extends BaseController {
 
 	constructor() {

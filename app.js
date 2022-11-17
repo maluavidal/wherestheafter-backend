@@ -2,6 +2,30 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+import multer from 'multer';
+
+const random = () => Math.floor(Math.random() * 10000 + 10000);
+
+import { resolve, extname } from 'path';
+
+const multerConfig = {
+	fileFilter: (req, file, cb) => {
+		if (file.mimetype !== 'image/png' && file.mimetype !== 'image/jpeg') {
+			return cb(new multer.MulterError('Archive must be PNG or JPG.'));
+		}
+
+		return cb(null, true);
+	},
+	storage: multer.diskStorage({
+		destination: (req, file, cb) => {
+			cb(null, resolve(__dirname, 'uploads'));
+		},
+		filename: (req, file, cb) => {
+			cb(null, `${Date.now()}_${random()}${extname(file.originalname)}`);
+		},
+	})
+};
+
 import './src/database/index';
 
 import express from 'express';
@@ -28,10 +52,12 @@ class App {
 	}
 
 	routes() {
+		const upload = multer(multerConfig);
+
 		this.app.use('/clients', ClientRoutes.setup());
 		this.app.use('/session', SessionRoutes.setup());
 		this.app.use('/users', UserRoutes.setup());
-		this.app.use('/events', EventRoutes.setup());
+		this.app.use('/events', EventRoutes.setup(upload));
 		this.app.use('/eventsclients', EventsClientsRoutes.setup());
 		this.app.use('/thumbs', ThumbRoutes.setup());
 	}

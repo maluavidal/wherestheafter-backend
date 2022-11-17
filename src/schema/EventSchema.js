@@ -30,4 +30,10 @@ const schema = {
 	}
 }
 
-export default schema;
+export default {
+	...schema,
+	update: {
+		...schema.show,
+		...schema.store
+	}
+};

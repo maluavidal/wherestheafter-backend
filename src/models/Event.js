@@ -1,3 +1,5 @@
+import Thumb from './Thumb';
+
 const { Model, DataTypes } = require('sequelize');
 
 export default class Event extends Model {
@@ -12,11 +14,19 @@ export default class Event extends Model {
 		day: DataTypes.DATE,
 		min_age: DataTypes.INTEGER,
 		address_cep: DataTypes.STRING,
-		thumb_id: DataTypes.NUMBER,
+		thumb_id: DataTypes.INTEGER,
 		price: DataTypes.DOUBLE
 	  }, {
 		sequelize,
-		paranoid: true
+		paranoid: true,
+		scopes: {
+			withThumb: {
+				include: [{
+					model: Thumb,
+					attributes: ['file_name', 'original_name', 'url']
+				}]
+			}
+		}
 	  })
 
 	  return this;
@@ -24,5 +34,6 @@ export default class Event extends Model {
 
 	static associate(models) {
 	  this.belongsTo(models.User, { foreignKey: 'user_id' });
+	  this.belongsTo(models.Thumb, { foreignKey: 'thumb_id' });
 	}
   }

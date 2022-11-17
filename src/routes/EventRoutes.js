@@ -3,12 +3,12 @@ import EventSchema from '../schema/EventSchema';
 import BaseRoute from './BaseRoute';
 
 class EventRoutes extends BaseRoute {
-	setup() {
+	setup(upload) {
 		this.router.get('/', eventController.index);
 		this.router.get('/:id', eventController.show);
-		this.router.put('/:id', this.SchemaValidator.Validate(EventSchema.store), eventController.update);
 		this.router.delete('/:id', eventController.delete);
-		this.router.post('/', this.SchemaValidator.Validate(EventSchema.store), eventController.store);
+		this.router.put('/:id', upload.single('file'), this.SchemaValidator.Validate(EventSchema.update), eventController.update);
+		this.router.post('/', upload.single('file'), this.SchemaValidator.Validate(EventSchema.store), eventController.store);
 
 		return this.router;
 	}

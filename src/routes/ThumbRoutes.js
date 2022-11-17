@@ -3,7 +3,7 @@ import ThumbSchema from '../schema/ThumbSchema';
 import BaseRoute from './BaseRoute';
 
 class PhotoRoutes extends BaseRoute {
-	setup() {
+	setup(upload) {
 		this.router.get('/', ThumbController.index);
 		this.router.get('/:id', ThumbController.show);
 		this.router.put('/:id', this.SchemaValidator.Validate(ThumbSchema.update), ThumbController.update);
