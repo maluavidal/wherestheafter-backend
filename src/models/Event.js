@@ -9,9 +9,10 @@ export default class Event extends Model {
 		address_city: DataTypes.STRING,
 		starts_at: DataTypes.DATE,
 		ends_at: DataTypes.DATE,
+		day: DataTypes.DATE,
 		min_age: DataTypes.INTEGER,
 		address_cep: DataTypes.STRING,
-		thumb_url: DataTypes.STRING,
+		thumb_id: DataTypes.NUMBER,
 		price: DataTypes.DOUBLE
 	  }, {
 		sequelize,

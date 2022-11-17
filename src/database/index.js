@@ -4,8 +4,10 @@ import databaseConfig from '../config/database.js';
 import User from '../models/User.js';
 import Client from '../models/Client.js';
 import Event from '../models/Event.js';
+import EventsClient from '../models/EventsClients.js';
+import Thumb from '../models/Thumb';
 
-const models = [User, Client, Event];
+const models = [User, Client, Event, EventsClient, Thumb];
 
 class Database {
   constructor(){

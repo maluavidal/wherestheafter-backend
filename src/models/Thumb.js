@@ -1,11 +1,11 @@
-import Sequelize, { Model } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import appConfig from '../config/appConfig';
 
-export default class Photo extends Model {
+export default class Thumb extends Model {
   static init(sequelize) {
     super.init({
-      originalname: {
-        type: Sequelize.STRING,
+      original_name: {
+        type: DataTypes.STRING,
         defaultValue: '',
         validate: {
           notEmpty: {
@@ -13,8 +13,8 @@ export default class Photo extends Model {
           },
         },
       },
-      filename: {
-        type: Sequelize.STRING,
+      file_name: {
+        type: DataTypes.STRING,
         defaultValue: '',
         validate: {
           notEmpty: {
@@ -23,15 +23,17 @@ export default class Photo extends Model {
         },
       },
       url: {
-        type: Sequelize.VIRTUAL,
+        type: DataTypes.VIRTUAL,
         get() {
           return `${appConfig.url}/images/${this.getDataValue('filename')}`;
         },
       },
     }, {
       sequelize,
-      tableName: 'photos',
+	  paranoid: true,
+      tableName: 'thumbs',
     });
+
     return this;
   }
 

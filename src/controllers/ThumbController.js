@@ -1,9 +1,9 @@
-import PhotoController from './PhotoController';
-import PhotoService from "../service/PhotoService";
+import BaseController from './BaseController';
+import ThumbService from "../service/ThumbService";
 
 // const upload = multer(multerConfig).single('file');
 
-class UserController extends PhotoController {
+class ThumbController extends BaseController {
 
 	constructor() {
 		super();
@@ -13,9 +13,9 @@ class UserController extends PhotoController {
 
 	async index(req, res) {
 		try {
-			const users = await PhotoService.list();
+			const thumbs = await ThumbService.list();
 
-			return this.handleSuccess(res, users);
+			return this.handleSuccess(res, thumbs);
 		} catch (error) {
 			return this.handleError(res, error);
 		}
@@ -23,9 +23,9 @@ class UserController extends PhotoController {
 
 	async show(req, res) {
 		try {
-			const user = await PhotoService.show(req.params);
+			const thumb = await ThumbService.show(req.params);
 
-			return this.handleSuccess(res, user);
+			return this.handleSuccess(res, thumb);
 		} catch (error) {
 			return this.handleError(res, error);
 		}
@@ -33,9 +33,9 @@ class UserController extends PhotoController {
 
 	async store(req, res) {
 		try {
-			const user = await PhotoService.store(req.data);
+			const thumb = await ThumbService.store(req.data);
 
-			return this.handleSuccess(res, user);
+			return this.handleSuccess(res, thumb);
 		} catch (error) {
 			return this.handleError(res, error);
 		}
@@ -43,9 +43,9 @@ class UserController extends PhotoController {
 
 	async update(req, res) {
 		try {
-			const user = await PhotoService.update(req.params);
+			const thumb = await ThumbService.update(req.params);
 
-			return this.handleSuccess(res, user);
+			return this.handleSuccess(res, thumb);
 		} catch (error) {
 			return this.handleError(res, error);
 
@@ -54,9 +54,9 @@ class UserController extends PhotoController {
 
 	async delete(req, res) {
 		try {
-			const user = await PhotoService.delete(req.params);
+			const thumb = await ThumbService.delete(req.params);
 
-			return this.handleSuccess(res, user);
+			return this.handleSuccess(res, thumb);
 		} catch (error) {
 			return this.handleError(res, error);
 
@@ -64,4 +64,4 @@ class UserController extends PhotoController {
 	}
 }
 
-export default new UserController();
+export default new ThumbController();

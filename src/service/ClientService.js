@@ -18,7 +18,7 @@ class ClientService {
 	};
 
 	async store(data) {
-			return Client.create(data);
+		return Client.create(data);
 	};
 
 	async update({ changes, filter }) {

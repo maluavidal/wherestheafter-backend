@@ -14,15 +14,15 @@ class EventsClientsService {
 			}
 		};
 
-		return await EventsClients.findOne(eventsClient);
+		return EventsClients.findOne(eventsClient);
 	};
 
 	async store(data) {
-			return EventsClients.create(data);
+		return EventsClients.create(data);
 	};
 
 	async update({ changes, filter }) {
-		return await EventsClients.update(changes, {
+		return EventsClients.update(changes, {
 			where: {
 				id: filter.id,
 				deleted_at: null

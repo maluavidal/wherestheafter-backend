@@ -20,7 +20,7 @@ class EventsClientsController extends BaseController {
 
 	async show(req, res) {
 		try {
-			const eventsclient = await EventsClientsService.show(req.params);
+			const eventsclient = await EventsClientsService.show(req.params.id);
 
 			return this.handleSuccess(res, eventsclient);
 		} catch (error) {
@@ -40,7 +40,14 @@ class EventsClientsController extends BaseController {
 
 	async update(req, res) {
 		try {
-			const eventsclient = await EventsClientsService.update(req.params);
+			const options = {
+				changes: req.body,
+				filter:{
+					id: req.params.id
+				}
+			};
+
+			const eventsclient = await EventsClientsService.update(options);
 
 			return this.handleSuccess(res, eventsclient);
 		} catch (error) {
@@ -51,12 +58,11 @@ class EventsClientsController extends BaseController {
 
 	async delete(req, res) {
 		try {
-			const eventsclient = await EventsClientsService.delete(req.params);
+			const eventsclient = await EventsClientsService.delete(req.params.id);
 
 			return this.handleSuccess(res, eventsclient);
 		} catch (error) {
 			return this.handleError(res, error);
-
 		}
 	}
 }

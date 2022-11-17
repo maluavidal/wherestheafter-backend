@@ -31,7 +31,7 @@ class EventController extends BaseController {
     async store(req, res) {
 		try {
 			console.log(req.data, 'data no controller')
-			const event = await EventService.store(req.body);
+			const event = await EventService.store(req.data);
 
 			return this.handleSuccess(res, event);
 		} catch (error) {

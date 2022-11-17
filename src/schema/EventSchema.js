@@ -5,14 +5,15 @@ const schema = {
 		body: Yup.object().shape({
             name: Yup.string().required(),
             about: Yup.string(),
+			day: Yup.date().required(),
             starts_at: Yup.date().required(),
             ends_at: Yup.date(),
 			min_age: Yup.number().integer(),
-			address_cep: Yup.string(),
-			address: Yup.string().required(),
-			address_city: Yup.string().required(),
-			thumb_url: Yup.string(),
-			price: Yup.number()
+			address_cep: Yup.string().required(),
+			address: Yup.string(),
+			address_city: Yup.string(),
+			price: Yup.number(),
+			user_id: Yup.number()
 		}).noUnknown(),
 	},
 

@@ -14,7 +14,7 @@ class EventService {
 			}
 		};
 
-		return await Event.findOne(event);
+		return Event.findOne(event);
 	};
 
 	async store(data) {
@@ -24,7 +24,7 @@ class EventService {
 				starts_at: new Date(data.starts_at)
 			}
 			console.log(dataCreate, 'data mp servoc')
-			return Event.create(dataCreate, {raw: true});
+			return Event.create(dataCreate);
 		} catch(err) {
 			console.log(err, 'err')
 		}
@@ -32,7 +32,7 @@ class EventService {
 	};
 
 	async update({ changes, filter }) {
-		return await Event.update(changes, {
+		return Event.update(changes, {
 			where: {
 				id: filter.id,
 				deleted_at: null

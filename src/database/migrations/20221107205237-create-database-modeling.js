@@ -45,6 +45,7 @@ module.exports = {
 
 					},
 				}, { transaction }),
+
 				queryInterface.createTable('clients', {
 					id: {
 						type: Sequelize.INTEGER,
@@ -85,6 +86,35 @@ module.exports = {
 				}, { transaction }),
 			]);
 
+			await queryInterface.createTable('thumbs', {
+				id: {
+					type: Sequelize.INTEGER,
+					allowNull: false,
+					autoIncrement: true,
+					primaryKey: true,
+ 				},
+				original_name: {
+					type: Sequelize.STRING,
+					allowNull: false,
+				},
+				file_name: {
+					type: Sequelize.STRING,
+					allowNull: false,
+				},
+				created_at: {
+					type: Sequelize.DATE,
+					allowNull: false,
+				},
+				updated_at: {
+					type: Sequelize.DATE,
+					allowNull: false,
+				},
+				deleted_at: {
+					type: Sequelize.DATE,
+					allowNull: false
+				}
+			},  { transaction });
+
 			await queryInterface.createTable('events', {
 				id: {
 					type: Sequelize.INTEGER,
@@ -98,7 +128,7 @@ module.exports = {
 				},
 				about: {
 					type: Sequelize.TEXT,
-					allowNull: false,
+					allowNull: true,
 				},
 				user_id: {
 					type: Sequelize.INTEGER,
@@ -108,13 +138,17 @@ module.exports = {
 						key: 'id',
 					},
 				},
+				day: {
+					type: Sequelize.DATE,
+					allowNull: false,
+				},
 				starts_at: {
 					type: Sequelize.DATE,
 					allowNull: false,
 				},
 				ends_at: {
 					type: Sequelize.DATE,
-					allowNull: false,
+					allowNull: true,
 				},
 				min_age: {
 					type: Sequelize.INTEGER,
@@ -133,14 +167,18 @@ module.exports = {
 					type: Sequelize.STRING,
 					allowNull: true,
 				},
-				thumb_url: {
-					type: Sequelize.STRING,
-					allowNull: false,
+				thumb_id: {
+					type: Sequelize.INTEGER,
+					allowNull: true,
+					references: {
+						model: 'thumbs',
+						key: 'id',
+					},
 				},
 				price: {
 					type: Sequelize.FLOAT,
 					allowNull: false,
-					defaultValue: 0,
+					defaultValue: 0.00,
 				},
 				created_at: {
 					type: Sequelize.DATE,
@@ -189,6 +227,10 @@ module.exports = {
 					type: Sequelize.DATE,
 					allowNull: false,
 				},
+				updated_at: {
+					type: Sequelize.DATE,
+					allowNull: false,
+				},
 				deleted_at: {
 					type: Sequelize.DATE,
 					allowNull: true,
@@ -210,6 +252,8 @@ module.exports = {
 		try {
 			await queryInterface.dropTable('events_clients', { transaction });
 
+			await queryInterface.dropTable('thumbs', { transaction });
+
 			await queryInterface.dropTable('events', { transaction });
 
 			await Promise.all([
@@ -217,11 +261,11 @@ module.exports = {
 				queryInterface.dropTable('clients', { transaction }),
 			]);
 
-	  await transaction.commit();
+			await transaction.commit();
 		} catch (error) {
 			await transaction.rollback();
 
-	  throw error;
+			throw error;
 		}
 	},
 };

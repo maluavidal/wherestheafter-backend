@@ -6,9 +6,9 @@ class EventRoutes extends BaseRoute {
 	setup() {
 		this.router.get('/', eventController.index);
 		this.router.get('/:id', eventController.show);
-		this.router.put('/:id', eventController.update);
+		this.router.put('/:id', this.SchemaValidator.Validate(EventSchema.store), eventController.update);
 		this.router.delete('/:id', eventController.delete);
-		this.router.post('/', eventController.store);
+		this.router.post('/', this.SchemaValidator.Validate(EventSchema.store), eventController.store);
 
 		return this.router;
 	}
