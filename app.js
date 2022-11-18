@@ -1,46 +1,21 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
-
 import multer from 'multer';
-
-const random = () => Math.floor(Math.random() * 10000 + 10000);
-
-import { resolve, extname } from 'path';
-
-const multerConfig = {
-	fileFilter: (req, file, cb) => {
-		if (file.mimetype !== 'image/png' && file.mimetype !== 'image/jpeg') {
-			return cb(new multer.MulterError('Archive must be PNG or JPG.'));
-		}
-
-		return cb(null, true);
-	},
-	storage: multer.diskStorage({
-		destination: (req, file, cb) => {
-			cb(null, resolve(__dirname, 'uploads'));
-		},
-		filename: (req, file, cb) => {
-			cb(null, `${Date.now()}_${random()}${extname(file.originalname)}`);
-		},
-	})
-};
-
-import './src/database/index';
-
+import dotenv from 'dotenv';
 import express from 'express';
 
+import './src/database/index';
 import { UserRoutes } from './src/routes';
+import { EventRoutes } from './src/routes';
+import { ThumbRoutes } from './src/routes';
 import { ClientRoutes } from './src/routes';
 import { SessionRoutes } from './src/routes';
-import { EventRoutes } from './src/routes';
 import { EventsClientsRoutes } from './src/routes';
-import { ThumbRoutes } from './src/routes';
 
- // import { resolve } from 'path';
+import multerConfig from './src/config/multerConfig';
 
 class App {
 	constructor() {
+		dotenv.config();
+
 		this.app = express();
 		this.middlewares();
 		this.routes();

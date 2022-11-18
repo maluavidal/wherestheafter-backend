@@ -17,6 +17,16 @@ class EventsClientsService {
 		return EventsClients.findOne(eventsClient);
 	};
 
+	async countConfirmedEvent(eventId) {
+		const eventsClient = {
+			where: {
+				event_id: eventId
+			}
+		};
+
+		return EventsClients.count(eventsClient);
+	};
+
 	async store(data) {
 		return EventsClients.create(data);
 	};

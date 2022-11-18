@@ -5,7 +5,8 @@ const schema = {
 		body: Yup.object().shape({
             name: Yup.string().required(),
             email: Yup.string().email().required(),
-			password: Yup.string().required()
+			password: Yup.string().required(),
+			is_admin: Yup.boolean()
 		}).noUnknown(),
 	},
 

@@ -5,7 +5,7 @@ class EventsClientsController extends BaseController {
 	constructor() {
 		super();
 
-		this.bindActions(['index', 'show', 'store', 'update', 'delete']);
+		this.bindActions(['index', 'show', 'store', 'update', 'delete', 'countConfirmedEvent']);
 	}
 
 	async index(req, res) {
@@ -17,10 +17,19 @@ class EventsClientsController extends BaseController {
 			return this.handleError(res, error);
 		}
 	};
+	async countConfirmedEvent(req, res) {
+		try {
+			const eventsclients = await EventsClientsService.countConfirmedEvent(req.filter.event_id);
+
+			return this.handleSuccess(res, eventsclients);
+		} catch (error) {
+			return this.handleError(res, error);
+		}
+	};
 
 	async show(req, res) {
 		try {
-			const eventsclient = await EventsClientsService.show(req.params.id);
+			const eventsclient = await EventsClientsService.show(req.filter.id);
 
 			return this.handleSuccess(res, eventsclient);
 		} catch (error) {

@@ -2,7 +2,6 @@ import BaseController from './BaseController';
 import UserService from "../service/UserService";
 
 class UserController extends BaseController {
-
 	constructor() {
 		super();
 
@@ -21,7 +20,7 @@ class UserController extends BaseController {
 
 	async show(req, res) {
 		try {
-			const user = await UserService.show(req.params.id);
+			const user = await UserService.show(req.filter.id);
 
 			return this.handleSuccess(res, user);
 		} catch (error) {
@@ -35,8 +34,6 @@ class UserController extends BaseController {
 
 			return this.handleSuccess(res, user);
 		} catch (error) {
-			console.log(error);
-
 			return this.handleError(res, error);
 		}
 	}

@@ -1,14 +1,10 @@
 import ThumbController from '../controllers/ThumbController';
-import ThumbSchema from '../schema/ThumbSchema';
 import BaseRoute from './BaseRoute';
+import { tokenVerify } from '../middlewares/loginRequired';
 
 class PhotoRoutes extends BaseRoute {
 	setup(upload) {
-		this.router.get('/', ThumbController.index);
-		this.router.get('/:id', ThumbController.show);
-		this.router.put('/:id', this.SchemaValidator.Validate(ThumbSchema.update), ThumbController.update);
-		this.router.delete('/:id', ThumbController.delete);
-		this.router.post('/', this.SchemaValidator.Validate(ThumbSchema.store), ThumbController.store);
+		this.router.delete('/:id', tokenVerify, ThumbController.delete);
 
 		return this.router;
 	}

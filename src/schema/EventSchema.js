@@ -5,7 +5,6 @@ const schema = {
 		body: Yup.object().shape({
             name: Yup.string().required(),
             about: Yup.string(),
-			day: Yup.date().required(),
             starts_at: Yup.date().required(),
             ends_at: Yup.date(),
 			min_age: Yup.number().integer(),

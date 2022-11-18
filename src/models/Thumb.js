@@ -1,4 +1,4 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 import appConfig from '../config/appConfig';
 
 export default class Thumb extends Model {
@@ -25,7 +25,7 @@ export default class Thumb extends Model {
       url: {
         type: DataTypes.VIRTUAL,
         get() {
-          return `${appConfig.url}/images/${this.getDataValue('filename')}`;
+          return `${appConfig.url}/images/${this.getDataValue('file_name')}`;
         },
       }
     }, {

@@ -4,36 +4,27 @@ const { Model, DataTypes } = require('sequelize');
 
 export default class Event extends Model {
 	static init(sequelize) {
-	  super.init({
-		name: DataTypes.STRING,
-		about: DataTypes.TEXT,
-		address: DataTypes.STRING,
-		address_city: DataTypes.STRING,
-		starts_at: DataTypes.DATE,
-		ends_at: DataTypes.DATE,
-		day: DataTypes.DATE,
-		min_age: DataTypes.INTEGER,
-		address_cep: DataTypes.STRING,
-		thumb_id: DataTypes.INTEGER,
-		price: DataTypes.DOUBLE
-	  }, {
-		sequelize,
-		paranoid: true,
-		scopes: {
-			withThumb: {
-				include: [{
-					model: Thumb,
-					attributes: ['file_name', 'original_name', 'url']
-				}]
-			}
-		}
-	  })
+		super.init({
+			name: DataTypes.STRING,
+			about: DataTypes.TEXT,
+			address: DataTypes.STRING,
+			address_city: DataTypes.STRING,
+			starts_at: DataTypes.DATE,
+			ends_at: DataTypes.DATE,
+			min_age: DataTypes.INTEGER,
+			address_cep: DataTypes.STRING,
+			thumb_id: DataTypes.INTEGER,
+			price: DataTypes.DOUBLE
+		}, {
+			sequelize,
+			paranoid: true,
+		})
 
-	  return this;
+		return this;
 	}
 
 	static associate(models) {
-	  this.belongsTo(models.User, { foreignKey: 'user_id' });
-	  this.belongsTo(models.Thumb, { foreignKey: 'thumb_id' });
+		this.belongsTo(models.User, { foreignKey: 'user_id' });
+		this.belongsTo(models.Thumb, { foreignKey: 'thumb_id' });
 	}
-  }
+}

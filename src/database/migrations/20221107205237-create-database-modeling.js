@@ -26,8 +26,8 @@ module.exports = {
 						type: Sequelize.STRING,
 						allowNull: false
 					},
-					type: {
-						type: Sequelize.STRING(13),
+					is_admin: {
+						type: Sequelize.BOOLEAN,
 						allowNull: false
 					},
 					created_at: {
@@ -137,10 +137,6 @@ module.exports = {
 						model: 'users',
 						key: 'id',
 					},
-				},
-				day: {
-					type: Sequelize.DATE,
-					allowNull: false,
 				},
 				starts_at: {
 					type: Sequelize.DATE,
@@ -252,9 +248,10 @@ module.exports = {
 		try {
 			await queryInterface.dropTable('events_clients', { transaction });
 
+			await queryInterface.dropTable('events', { transaction });
+
 			await queryInterface.dropTable('thumbs', { transaction });
 
-			await queryInterface.dropTable('events', { transaction });
 
 			await Promise.all([
 				queryInterface.dropTable('users', { transaction }),

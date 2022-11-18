@@ -31,19 +31,15 @@ class EventController extends BaseController {
 
     async store(req, res) {
 		try {
-			console.log(req.data, 'data no controller')
-			console.log(req.file, 'file');
 			const options = {
 				event: {
 					...req.data,
-					user_id: 1
+					user_id: req.userInfo.id,
 				},
 				file: req.file
 			};
-			console.log(req.userInfo, 'req.userInfo')
 
 			const event = await EventService.store(options);
-			console.log(event, 'event')
 
 			return this.handleSuccess(res, event);
 		} catch (error) {
@@ -60,8 +56,6 @@ class EventController extends BaseController {
 					id: req.params.id
 				}
 			};
-
-			console.log(req.file, 'file');
 
 			const event = await EventService.update(options);
 

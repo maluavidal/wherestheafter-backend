@@ -9,9 +9,9 @@ export default class User extends Model {
 		password: DataTypes.VIRTUAL,
 		password_hash: DataTypes.STRING,
 		deleted_at: DataTypes.DATE,
-		type: {
-			type: DataTypes.STRING(13),
-			defaultValue: 'EVENT_MANAGER',
+		is_admin: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false,
 			allowNull: false
 		},
 	  }, {

@@ -1,8 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { User } from '../models';
-import bcryptjs from 'bcrypt';
 
-export default async (req, res, next) => {
+const tokenVerify = async (req, res, next) => {
 	const { authorization } = req.headers;
 
 	if (!authorization) {
@@ -24,7 +23,8 @@ export default async (req, res, next) => {
 		deleted_at: null
       },
 	  paranoid: false,
-	  attributes: ['id', 'name', 'email', 'is_admin', 'is_event_manager']
+	  attributes: ['id', 'email', 'is_admin'],
+	  raw: true
     });
 
     if (!user) {
@@ -40,4 +40,19 @@ export default async (req, res, next) => {
       errors: ['Expired or invalid token.'],
     });
   }
-};
+}
+
+const isAdmin = (req, res, next) => {
+	if (req.userInfo.is_admin) {
+		next();
+	} else {
+		return res.status(401).json({
+			errors: ['Access denied.'],
+		  });
+	}
+}
+
+export {
+	tokenVerify,
+	isAdmin
+}

@@ -15,6 +15,12 @@ const schema = {
 		}).noUnknown(),
 	},
 
+	showEvent: {
+		params: Yup.object().shape({
+            event_id: Yup.number().integer().required(),
+		}).noUnknown(),
+	},
+
 	delete: {
 		params: Yup.object().shape({
             id: Yup.number().integer().required(),

@@ -1,15 +1,28 @@
 import { Event, Thumb } from "../models";
+import cep from 'cep-promise'
 
 class EventService {
 	async list() {
-		// estudar scope
-		return Event.scope('withThumb').findAll({
+		return Event.findAll({
+			withThumb: {
+				include: [{
+					model: Thumb,
+					attributes: ['file_name', 'original_name', 'url']
+				}]
+			},
 			order: [['id', 'ASC']]
 		});
 	};
 
 	async show(id) {
-		return Event.scope('withThumb').findOne({
+		return Event.findOne({
+			withThumb: {
+				include: [{
+					model: Thumb,
+					attributes: ['file_name', 'original_name', 'url']
+				}]
+			},
+			order: [['id', 'ASC']],
 			where: {
 				id
 			}
@@ -17,30 +30,37 @@ class EventService {
 	};
 
 	async store({ event, file }) {
-		try {
-			const dataCreate = {
-				...event,
-				starts_at: new Date(event.starts_at)
-			};
+		const cep = require('cep-promise');
+		const cepInfo = await cep(event.address_cep);
 
-			if (file) {
-				const fileCreated = await Thumb.create({
-					file_name: file.filename,
-					original_name: file.originalname,
-					url: file.path
-				}, { returning: true });
+		const dataCreate = {
+			...event,
+			address_cep: cepInfo.cep,
+			address_city: cepInfo.city,
+			starts_at: new Date(event.starts_at)
+		};
 
-				dataCreate.thumb_id = fileCreated.id;
-			}
+		if (file) {
+			const fileCreated = await Thumb.create({
+				file_name: file.filename,
+				original_name: file.originalname,
+				url: file.path
+			}, { returning: true });
 
-			return Event.create(dataCreate);
-		} catch(err) {
-			console.log(err, 'err')
+			dataCreate.thumb_id = fileCreated.id;
 		}
+
+		return Event.create(dataCreate);
 	};
 
 	update({ changes, filter }) {
 		return Event.update(changes, {
+			withThumb: {
+				include: [{
+					model: Thumb,
+					attributes: ['file_name', 'original_name', 'url']
+				}]
+			},
 			where: {
 				id: filter.id,
 				deleted_at: null
