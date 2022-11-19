@@ -4,8 +4,6 @@ class EventsClients extends Model {
 	static init(sequelize) {
 	  super.init({
 		payment_method: DataTypes.STRING,
-		event_id: DataTypes.INTEGER,
-		client_id: DataTypes.INTEGER,
 		deleted_at: DataTypes.DATE,
 	  }, {
 		sequelize,

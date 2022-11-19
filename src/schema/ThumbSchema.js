@@ -1,12 +1,11 @@
-import ThumbController from '../controllers/ThumbController';
-import BaseRoute from '../routes/BaseRoute'
+import * as Yup from 'yup';
 
-class ThumbRoutes extends BaseRoute {
-  setup() {
-    this.routes.delete('/:id', ThumbController.delete)
+const schema = {
+	delete: {
+		params: Yup.object().shape({
+            id: Yup.number().integer().required(),
+		}).noUnknown(),
+	}
+};
 
-    return this.routes
-  }
-}
-
-export default new ThumbRoutes();
+export default schema;

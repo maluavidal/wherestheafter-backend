@@ -31,4 +31,3 @@ class Database {
 
 export default new Database();
 
-// conexao do banco de dados com os models

@@ -1,22 +1,25 @@
-module.exports = () => {
-    const pdfService = require('../services/pdfService')();
+import BaseController from './BaseController';
+import pdfService from '../service/pdfService';
 
-    const index = async (req, res) => {
-        try {
-            const response = await pdfService.exportPDF({
-                id: req.params.student_id,
-                logged_user_id: req.userId
-            });
+class pdfController extends BaseController {
+	constructor() {
+		super();
+
+		this.bindActions(['index']);
+	}
+
+	async index(req, res) {
+		try {
+			const response = await pdfService.exportPDF(req.params.id);
 
 			res.type('pdf');
-			res.download(response)
-        }
-        catch (e) {
-            return res.status(500).json({ error: "The reservation does not exist." });
-        }
-    };
+			res.download(response);
 
-    return {
-        index
-    };
+			return this.handleSuccess(res, response);
+		} catch (error) {
+			return this.handleError(res, error);
+		}
+	}
 }
+
+export default new pdfController();

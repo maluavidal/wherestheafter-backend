@@ -1,9 +1,12 @@
-const express = require('express');
-const pdfController = require('../controllers/pdfController')()
-const loginRequired = require('../middlewares/loginRequired')
+import pdfController from '../controllers/pdfController';
+import BaseRoute from './BaseRoute';
 
-const routes = express.Router();
+class pdfRoutes extends BaseRoute {
+	setup() {
+		this.router.get('/:id', pdfController.index);
 
-routes.get('/pdf/:student_id', loginRequired, pdfController.index);
+		return this.router;
+	}
+}
 
-module.exports = routes;
+export default new pdfRoutes();

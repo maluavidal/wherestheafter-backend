@@ -2,7 +2,7 @@ import ThumbController from '../controllers/ThumbController';
 import BaseRoute from './BaseRoute';
 import { tokenVerify } from '../middlewares/loginRequired';
 
-class PhotoRoutes extends BaseRoute {
+class ThumbRoutes extends BaseRoute {
 	setup(upload) {
 		this.router.delete('/:id', tokenVerify, ThumbController.delete);
 
@@ -10,4 +10,4 @@ class PhotoRoutes extends BaseRoute {
 	}
 }
 
-export default new PhotoRoutes();
+export default new ThumbRoutes();

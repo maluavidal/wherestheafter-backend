@@ -1,5 +1,3 @@
-import Thumb from './Thumb';
-
 const { Model, DataTypes } = require('sequelize');
 
 export default class Event extends Model {
@@ -13,7 +11,6 @@ export default class Event extends Model {
 			ends_at: DataTypes.DATE,
 			min_age: DataTypes.INTEGER,
 			address_cep: DataTypes.STRING,
-			thumb_id: DataTypes.INTEGER,
 			price: DataTypes.DOUBLE
 		}, {
 			sequelize,
