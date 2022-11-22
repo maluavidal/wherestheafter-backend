@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import SchemaValidator from '../schema/validate';
+import SchemaValidator from '../middlewares/Validate';
 
 class BaseRoute {
   constructor() {

@@ -1,5 +1,5 @@
 import sessionController from '../controllers/SessionController';
-import sessionSchema from '../schema/SessionSchema';
+import sessionSchema from '../schemas/SessionSchema';
 import BaseRoute from './BaseRoute';
 
 class SessionRoutes extends BaseRoute {

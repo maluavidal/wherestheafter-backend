@@ -1,5 +1,5 @@
 import BaseController from './BaseController';
-import EventService from '../service/EventService';
+import EventService from '../services/EventService';
 
 class EventController extends BaseController {
 	constructor() {

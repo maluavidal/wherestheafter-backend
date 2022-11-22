@@ -8,27 +8,28 @@
 
     <style>
         h2 {
-            text-decoration: underline;
-            text-align: center;
-            margin-top: 10px;
+            text-align: left;
+            margin-top: 50px;
+			margin-bottom: 25px;
             font-weight: bold;
+			text-transform: uppercase;
         }
     </style>
 
-
 </head>
 
-<body>
-    <h2>Librarian - {{ userName }}</h2>
-    <table class="table table-dark">
-        <thead>
-            <tr>
-                <th style="padding-left: 40px;">EVENT</th>
-                <th style="padding-left: 40px;">CLIENT</th>
-            </tr>
-        </thead>
-        <tbody>{{ seila }}</tbody>
-    </table>
+<body style="margin-left: 50px;">
+    <h2> {{ event-name }} </h2>
+	<div style="margin-bottom: 25px">
+		<p>{{ street }}, {{ neighborhood }}, {{ city }}-{{ state }}</p>
+	</div>
+	<div style="margin-top: 25px;">
+		<p style="margin-bottom: 5px; font-weight: lighter;">DATA</p>
+		<p> {{ datetime }} </p>
+	</div>
+	<div style="margin-left: 4rem; padding-left: 4rem;">
+		<img src="{{ img_src }}"  type="application/pdf"  width="250px"></img>
+	</div>
 </body>
 
 </html>

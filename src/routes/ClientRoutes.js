@@ -1,5 +1,5 @@
 import clientController from '../controllers/ClientController';
-import ClientSchema from '../schema/ClientSchema';
+import ClientSchema from '../schemas/ClientSchema';
 import BaseRoute from './BaseRoute';
 
 class ClientRoutes extends BaseRoute {

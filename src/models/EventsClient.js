@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 
-class EventsClients extends Model {
+class EventsClient extends Model {
 	static init(sequelize) {
 	  super.init({
 		payment_method: DataTypes.STRING,
@@ -19,4 +19,4 @@ class EventsClients extends Model {
 	}
   }
 
-  module.exports = EventsClients;
+  module.exports = EventsClient;

@@ -1,5 +1,5 @@
 import BaseController from './BaseController';
-import SessionService from '../service/SessionService';
+import SessionService from '../services/SessionService';
 
 class SessionController extends BaseController {
 	constructor() {

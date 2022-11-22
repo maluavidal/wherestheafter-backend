@@ -1,5 +1,4 @@
 import { Event, Thumb } from "../models";
-import cep from 'cep-promise'
 
 class EventService {
 	async list() {

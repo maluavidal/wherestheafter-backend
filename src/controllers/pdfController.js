@@ -1,7 +1,7 @@
 import BaseController from './BaseController';
-import pdfService from '../service/pdfService';
+import PdfService from '../services/PdfService';
 
-class pdfController extends BaseController {
+class PdfController extends BaseController {
 	constructor() {
 		super();
 
@@ -10,16 +10,13 @@ class pdfController extends BaseController {
 
 	async index(req, res) {
 		try {
-			const response = await pdfService.exportPDF(req.params.id);
+			const response = await PdfService.exportPDF(req.params.id);
 
-			res.type('pdf');
 			res.download(response);
-
-			return this.handleSuccess(res, response);
 		} catch (error) {
 			return this.handleError(res, error);
 		}
 	}
 }
 
-export default new pdfController();
+export default new PdfController();

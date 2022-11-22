@@ -1,8 +1,8 @@
-import { EventsClients } from "../models";
+import { EventsClient } from "../models";
 
-class EventsClientsService {
+class EventsClientService {
 	async list() {
-		return EventsClients.findAll({
+		return EventsClient.findAll({
 			order: [['id', 'ASC']]
 		});
 	};
@@ -14,7 +14,7 @@ class EventsClientsService {
 			}
 		};
 
-		return EventsClients.findOne(eventsClient);
+		return EventsClient.findOne(eventsClient);
 	};
 
 	async countConfirmedEvent(eventId) {
@@ -24,15 +24,15 @@ class EventsClientsService {
 			}
 		};
 
-		return EventsClients.count(eventsClient);
+		return EventsClient.count(eventsClient);
 	};
 
 	async store(data) {
-		return EventsClients.create(data);
+		return EventsClient.create(data);
 	};
 
 	async update({ changes, filter }) {
-		return EventsClients.update(changes, {
+		return EventsClient.update(changes, {
 			where: {
 				id: filter.id,
 				deleted_at: null
@@ -47,11 +47,11 @@ class EventsClientsService {
 				id
 			}
 		}
-		await EventsClients.destroy(eventsClient);
+		await EventsClient.destroy(eventsClient);
 
 		return true;
 	};
 }
 
 
-export default new EventsClientsService();
+export default new EventsClientService();

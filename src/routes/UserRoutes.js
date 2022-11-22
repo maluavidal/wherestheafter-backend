@@ -1,7 +1,7 @@
 import BaseRoute from './BaseRoute';
-import userSchema from '../schema/UserSchema';
+import userSchema from '../schemas/UserSchema';
 import userController from '../controllers/UserController';
-import { tokenVerify, isAdmin } from '../middlewares/loginRequired';
+import { tokenVerify, isAdmin } from '../middlewares/LoginRequired';
 
 class UserRoutes extends BaseRoute {
 	setup() {

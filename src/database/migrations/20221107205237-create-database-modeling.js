@@ -114,7 +114,6 @@ module.exports = {
 					allowNull: true
 				}
 			},  { transaction });
-
 			await queryInterface.createTable('events', {
 				id: {
 					type: Sequelize.INTEGER,
@@ -153,6 +152,10 @@ module.exports = {
 				},
 				address_cep: {
 					type: Sequelize.STRING,
+					allowNull: false,
+				},
+				number: {
+					type: Sequelize.INTEGER,
 					allowNull: false,
 				},
 				address: {

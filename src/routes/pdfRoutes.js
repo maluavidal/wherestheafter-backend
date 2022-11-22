@@ -1,12 +1,12 @@
-import pdfController from '../controllers/pdfController';
+import PdfController from '../controllers/PdfController';
 import BaseRoute from './BaseRoute';
 
-class pdfRoutes extends BaseRoute {
+class PdfRoutes extends BaseRoute {
 	setup() {
-		this.router.get('/:id', pdfController.index);
+		this.router.get('/:id', PdfController.index);
 
 		return this.router;
 	}
 }
 
-export default new pdfRoutes();
+export default new PdfRoutes();

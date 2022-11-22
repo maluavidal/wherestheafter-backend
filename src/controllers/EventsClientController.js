@@ -1,7 +1,7 @@
 import BaseController from './BaseController';
-import EventsClientsService from "../service/EventsClientsService";
+import EventsClientService from "../services/EventsClientService";
 
-class EventsClientsController extends BaseController {
+class EventsClientController extends BaseController {
 	constructor() {
 		super();
 
@@ -10,7 +10,7 @@ class EventsClientsController extends BaseController {
 
 	async index(req, res) {
 		try {
-			const eventsclients = await EventsClientsService.list();
+			const eventsclients = await EventsClientService.list();
 
 			return this.handleSuccess(res, eventsclients);
 		} catch (error) {
@@ -19,7 +19,7 @@ class EventsClientsController extends BaseController {
 	};
 	async countConfirmedEvent(req, res) {
 		try {
-			const eventsclients = await EventsClientsService.countConfirmedEvent(req.filter.event_id);
+			const eventsclients = await EventsClientService.countConfirmedEvent(req.filter.event_id);
 
 			return this.handleSuccess(res, eventsclients);
 		} catch (error) {
@@ -29,7 +29,7 @@ class EventsClientsController extends BaseController {
 
 	async show(req, res) {
 		try {
-			const eventsclient = await EventsClientsService.show(req.filter.id);
+			const eventsclient = await EventsClientService.show(req.filter.id);
 
 			return this.handleSuccess(res, eventsclient);
 		} catch (error) {
@@ -39,7 +39,7 @@ class EventsClientsController extends BaseController {
 
 	async store(req, res) {
 		try {
-			const eventsclient = await EventsClientsService.store(req.data);
+			const eventsclient = await EventsClientService.store(req.data);
 
 			return this.handleSuccess(res, eventsclient);
 		} catch (error) {
@@ -56,7 +56,7 @@ class EventsClientsController extends BaseController {
 				}
 			};
 
-			const eventsclient = await EventsClientsService.update(options);
+			const eventsclient = await EventsClientService.update(options);
 
 			return this.handleSuccess(res, eventsclient);
 		} catch (error) {
@@ -67,7 +67,7 @@ class EventsClientsController extends BaseController {
 
 	async delete(req, res) {
 		try {
-			const eventsclient = await EventsClientsService.delete(req.params.id);
+			const eventsclient = await EventsClientService.delete(req.params.id);
 
 			return this.handleSuccess(res, eventsclient);
 		} catch (error) {
@@ -76,4 +76,4 @@ class EventsClientsController extends BaseController {
 	}
 }
 
-export default new EventsClientsController();
+export default new EventsClientController();

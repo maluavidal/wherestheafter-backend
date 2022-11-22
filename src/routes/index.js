@@ -4,8 +4,8 @@ import EventRoutes from './EventRoutes';
 import ThumbRoutes from './ThumbRoutes';
 import ClientRoutes from './ClientRoutes';
 import SessionRoutes from './SessionRoutes';
-import EventsClientsRoutes from './EventsClientsRoutes';
-import pdfRoutes from './pdfRoutes';
+import EventsClientRoutes from './EventsClientRoutes';
+import PdfRoutes from './PdfRoutes';
 
 import multerConfig from '../config/multerConfig';
 import multer from 'multer';
@@ -19,9 +19,9 @@ class Routes extends BaseRoute {
 		this.router.use('/session', SessionRoutes.setup());
 		this.router.use('/users', UserRoutes.setup());
 		this.router.use('/events', EventRoutes.setup(upload));
-		this.router.use('/eventsclients', EventsClientsRoutes.setup());
+		this.router.use('/eventsclients', EventsClientRoutes.setup());
 		this.router.use('/thumbs', ThumbRoutes.setup());
-		this.router.use('/pdf', pdfRoutes.setup());
+		this.router.use('/pdf', PdfRoutes.setup());
 
 		return this.router;
 	}

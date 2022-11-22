@@ -11,7 +11,8 @@ export default class Event extends Model {
 			ends_at: DataTypes.DATE,
 			min_age: DataTypes.INTEGER,
 			address_cep: DataTypes.STRING,
-			price: DataTypes.DOUBLE
+			price: DataTypes.DOUBLE,
+			number: DataTypes.INTEGER,
 		}, {
 			sequelize,
 			paranoid: true,

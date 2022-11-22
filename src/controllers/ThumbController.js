@@ -1,5 +1,5 @@
 import BaseController from './BaseController';
-import ThumbService from "../service/ThumbService";
+import ThumbService from "../services/ThumbService";
 
 class ThumbController extends BaseController {
 

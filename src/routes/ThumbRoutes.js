@@ -1,6 +1,6 @@
 import ThumbController from '../controllers/ThumbController';
 import BaseRoute from './BaseRoute';
-import { tokenVerify } from '../middlewares/loginRequired';
+import { tokenVerify } from '../middlewares/LoginRequired';
 
 class ThumbRoutes extends BaseRoute {
 	setup(upload) {

@@ -12,7 +12,8 @@ const schema = {
 			address: Yup.string(),
 			address_city: Yup.string(),
 			price: Yup.number(),
-			user_id: Yup.number()
+			user_id: Yup.number(),
+			number: Yup.number().min(1).required(),
 		}).noUnknown(),
 	},
 

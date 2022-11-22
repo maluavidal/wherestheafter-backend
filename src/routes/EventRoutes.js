@@ -1,7 +1,7 @@
 import eventController from '../controllers/EventController';
-import EventSchema from '../schema/EventSchema';
+import EventSchema from '../schemas/EventSchema';
 import BaseRoute from './BaseRoute';
-import { tokenVerify } from '../middlewares/loginRequired';
+import { tokenVerify } from '../middlewares/LoginRequired';
 
 class EventRoutes extends BaseRoute {
 	setup(upload) {
