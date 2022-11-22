@@ -41,9 +41,9 @@ class UserController extends BaseController {
 	async update(req, res) {
 		try {
 			const options = {
-				changes: req.body,
+				changes: req.data,
 				filter:{
-					id: req.params.id
+					id: req.filter.id
 				}
 			};
 
@@ -57,7 +57,7 @@ class UserController extends BaseController {
 
 	async delete(req, res) {
 		try {
-			await UserService.delete(req.params.id);
+			await UserService.delete(req.filter.id);
 
 			return this.handleSuccess(res, true);
 		} catch (error) {

@@ -11,7 +11,7 @@ class ThumbController extends BaseController {
 
 	async delete(req, res) {
 		try {
-			const thumb = await ThumbService.delete(req.params);
+			const thumb = await ThumbService.delete(req.filter);
 
 			return this.handleSuccess(res, thumb);
 		} catch (error) {

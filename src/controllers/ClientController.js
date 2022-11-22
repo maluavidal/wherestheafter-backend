@@ -43,7 +43,7 @@ class ClientController extends BaseController {
 			const options = {
 				changes: req.body,
 				filter:{
-					id: req.params.id
+					id: req.filter.id
 				}
 			};
 
@@ -57,7 +57,7 @@ class ClientController extends BaseController {
 
     async delete(req, res) {
         try {
-			await ClientService.delete(req.params.id);
+			await ClientService.delete(req.filter.id);
 
 			return this.handleSuccess(res, true);
 		} catch (error) {

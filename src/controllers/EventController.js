@@ -20,7 +20,7 @@ class EventController extends BaseController {
 
     async show(req, res) {
         try {
-			const event = await EventService.show(req.params.id);
+			const event = await EventService.show(req.filter.id);
 
 			return this.handleSuccess(res, event);
 		} catch (error) {
@@ -51,9 +51,9 @@ class EventController extends BaseController {
 	async update(req, res) {
 	    try {
 			const options = {
-				changes: req.body,
+				changes: req.data,
 				filter:{
-					id: req.params.id
+					id: req.filter.id
 				}
 			};
 
@@ -67,7 +67,7 @@ class EventController extends BaseController {
 
     async delete(req, res) {
         try {
-			await EventService.delete(req.params.id);
+			await EventService.delete(req.filter.id);
 
 			return this.handleSuccess(res, true);
 		} catch (error) {

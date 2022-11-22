@@ -22,6 +22,7 @@ const tokenVerify = async (req, res, next) => {
         email,
 		deleted_at: null
       },
+	  logging: true,
 	  paranoid: false,
 	  attributes: ['id', 'email', 'is_admin'],
 	  raw: true

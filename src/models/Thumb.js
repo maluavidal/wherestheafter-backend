@@ -25,7 +25,7 @@ export default class Thumb extends Model {
       url: {
         type: DataTypes.VIRTUAL,
         get() {
-          return `src/html/pdf.html/${this.file_name}`;
+          return `src/uploads/image/${this.file_name}`;
         },
       }
     }, {

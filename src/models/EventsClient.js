@@ -15,7 +15,7 @@ class EventsClient extends Model {
 
 	static associate(models) {
 	  this.belongsTo(models.Event, { foreignKey: 'event_id' });
-	  this.belongsTo(models.Client, { foreignKey: 'client_id' })
+	  this.belongsTo(models.Client, { foreignKey: 'client_id' });
 	}
   }
 

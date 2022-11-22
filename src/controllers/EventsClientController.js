@@ -50,9 +50,9 @@ class EventsClientController extends BaseController {
 	async update(req, res) {
 		try {
 			const options = {
-				changes: req.body,
+				changes: req.data,
 				filter:{
-					id: req.params.id
+					id: req.filter.id
 				}
 			};
 
@@ -67,7 +67,7 @@ class EventsClientController extends BaseController {
 
 	async delete(req, res) {
 		try {
-			const eventsclient = await EventsClientService.delete(req.params.id);
+			const eventsclient = await EventsClientService.delete(req.filter.id);
 
 			return this.handleSuccess(res, eventsclient);
 		} catch (error) {

@@ -9,8 +9,8 @@ class UserRoutes extends BaseRoute {
 		this.router.get('/', isAdmin, userController.index);
 		this.router.get('/:id', isAdmin, this.SchemaValidator.Validate(userSchema.show), userController.show);
 		this.router.post('/', isAdmin, this.SchemaValidator.Validate(userSchema.store), userController.store);
-		this.router.put('/:id', userController.update);
-		this.router.delete('/:id', userController.delete);
+		this.router.put('/:id', this.SchemaValidator.Validate(userSchema.update), userController.update);
+		this.router.delete('/:id', this.SchemaValidator.Validate(userSchema.delete), userController.delete);
 
 		return this.router;
 	}

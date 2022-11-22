@@ -16,6 +16,19 @@ const schema = {
 		}).noUnknown(),
 	},
 
+	update: {
+		params: Yup.object().shape({
+            id: Yup.number().integer().required(),
+		}).noUnknown(),
+
+		body: Yup.object().shape({
+            name: Yup.string(),
+            cpf: Yup.string(),
+            email: Yup.string().email(),
+            born_at: Yup.date(),
+		}).noUnknown(),
+	},
+
 	delete: {
 		params: Yup.object().shape({
             id: Yup.number().integer().required(),

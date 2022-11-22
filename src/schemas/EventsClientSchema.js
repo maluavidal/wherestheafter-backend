@@ -21,6 +21,18 @@ const schema = {
 		}).noUnknown(),
 	},
 
+	update: {
+		params: Yup.object().shape({
+            id: Yup.number().integer().required(),
+		}).noUnknown(),
+
+		body: Yup.object().shape({
+			payment_method: Yup.string().nullable(),
+			event_id: Yup.number(),
+			client_id: Yup.number(),
+		})
+	},
+
 	delete: {
 		params: Yup.object().shape({
             id: Yup.number().integer().required(),

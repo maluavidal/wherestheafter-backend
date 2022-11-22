@@ -10,7 +10,7 @@ class PdfController extends BaseController {
 
 	async index(req, res) {
 		try {
-			const response = await PdfService.exportPDF(req.params.id);
+			const response = await PdfService.exportPDF(req.filter.id);
 
 			res.download(response);
 		} catch (error) {

@@ -15,7 +15,7 @@ export default new(class PdfService {
             },
             include: [{
                 model: Event,
-                attributes: ['name', 'address_cep', 'starts_at', 'thumb_id'],
+                attributes: ['name', 'address_cep', 'starts_at', 'thumb_id', 'number', 'price'],
             }, {
                 model: Client,
                 attributes: ['cpf', 'name'],
@@ -25,8 +25,6 @@ export default new(class PdfService {
             attributes: []
         });
 
-		console.log(item, 'item');
-
         if (!item) {
             throw new Error('Ticket not found.')
         }
@@ -35,11 +33,13 @@ export default new(class PdfService {
 
 		const image = await Thumb.findOne({
 			where: {
-				id: item.Event.thumb_id
-			}
+				id: item.Event.thumb_id,
+			},
 		})
 
-        const options = {
+		const imageToBase64 = readFileSync(image.url, {encoding: 'base64'});
+
+		const options = {
             type: 'pdf',
             format: 'latter',
             orientation: 'portrait'
@@ -53,16 +53,21 @@ export default new(class PdfService {
 
 		const datetimeInfo = moment(item.Event.starts_at).locale('pt-BR').format("ddd, D MMM [-] YYYY [-] HH:mm");
 
-		htmlTemplate = htmlTemplate.replace('{{ img_src }}', generateQR);
+		htmlTemplate = htmlTemplate.replace('{{ qrcode }}', generateQR);
+		htmlTemplate = htmlTemplate.replace('{{ img_src }}', `data:image/png;base64,${imageToBase64}`);
 
 		htmlTemplate = htmlTemplate.replace('{{ street }}', addressInfo.street);
+		htmlTemplate = htmlTemplate.replace('{{ number }}', item.Event.number);
 		htmlTemplate = htmlTemplate.replace('{{ neighborhood }}', addressInfo.neighborhood);
 		htmlTemplate = htmlTemplate.replace('{{ city }}', addressInfo.city);
 		htmlTemplate = htmlTemplate.replace('{{ state }}', addressInfo.state);
 
+		htmlTemplate = htmlTemplate.replace('{{ client_name }}', item.Client.name);
+		htmlTemplate = htmlTemplate.replace('{{ price }}', item.Event.price);
+
 		htmlTemplate = htmlTemplate.replace('{{ datetime }}', datetimeInfo);
 
-        const filePath = (resolve(__dirname, '..', 'uploads', 'pdf') + `/ticket-${uuidv4()}.pdf`)
+		const filePath = (resolve(__dirname, '..', 'uploads', 'pdf') + `/ticket-${uuidv4()}.pdf`)
 
 		const pdfFile = await new Promise((resolve, reject) => {
             pdf.create(htmlTemplate, options).toFile(filePath, (err, buffer) => {
