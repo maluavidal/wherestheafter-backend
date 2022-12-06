@@ -6,7 +6,18 @@ class ThumbController extends BaseController {
 	constructor() {
 		super();
 
-		this.bindActions(['delete']);
+		this.bindActions(['showAll', 'delete']);
+	}
+
+	async showAll(req, res) {
+		try {
+			const thumb = await ThumbService.showAll();
+
+			return this.handleSuccess(res, thumb);
+		} catch (error) {
+			return this.handleError(res, error);
+
+		}
 	}
 
 	async delete(req, res) {

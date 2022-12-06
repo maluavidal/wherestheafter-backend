@@ -1,5 +1,4 @@
 import { Model, DataTypes } from 'sequelize';
-import appConfig from '../config/appConfig';
 
 export default class Thumb extends Model {
   static init(sequelize) {
@@ -23,10 +22,7 @@ export default class Thumb extends Model {
         },
       },
       url: {
-        type: DataTypes.VIRTUAL,
-        get() {
-          return `src/uploads/image/${this.file_name}`;
-        },
+        type: DataTypes.STRING,
       }
     }, {
       sequelize,

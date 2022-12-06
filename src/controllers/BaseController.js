@@ -9,7 +9,7 @@ export default class BaseController {
 	  return res.json(data);
 	}
 
-	handleError(res, error) {
-	  return res.status(401).json({ error: error.message });
+	handleError(res, error, code = 401) {
+	  return res.status(code).json({ error: error.message });
 	}
   }

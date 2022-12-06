@@ -5,6 +5,7 @@ import { tokenVerify } from '../middlewares/LoginRequired';
 
 class ThumbRoutes extends BaseRoute {
 	setup(upload) {
+		this.router.get('/', ThumbController.showAll);
 		this.router.delete('/:id', tokenVerify, this.SchemaValidator.Validate(ThumbSchema.delete), ThumbController.delete);
 
 		return this.router;

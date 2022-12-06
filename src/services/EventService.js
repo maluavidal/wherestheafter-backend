@@ -3,24 +3,20 @@ import { Event, Thumb } from "../models";
 class EventService {
 	async list() {
 		return Event.findAll({
-			withThumb: {
-				include: [{
-					model: Thumb,
-					attributes: ['file_name', 'original_name', 'url']
-				}]
-			},
+			include: [{
+				model: Thumb,
+				attributes: ['file_name', 'original_name', 'url']
+			}],
 			order: [['id', 'ASC']]
 		});
 	};
 
 	async show(id) {
 		return Event.findOne({
-			withThumb: {
 				include: [{
 					model: Thumb,
 					attributes: ['file_name', 'original_name', 'url']
-				}]
-			},
+				}],
 			order: [['id', 'ASC']],
 			where: {
 				id
@@ -40,6 +36,7 @@ class EventService {
 		};
 
 		if (file) {
+			console.log(file, 'file')
 			const fileCreated = await Thumb.create({
 				file_name: file.filename,
 				original_name: file.originalname,
@@ -49,17 +46,20 @@ class EventService {
 			dataCreate.thumb_id = fileCreated.id;
 		}
 
+
+//  get() {
+// 	return `src/uploads/image/${this.file_name}`;
+//   },
+
 		return Event.create(dataCreate);
 	};
 
 	update({ changes, filter }) {
 		return Event.update(changes, {
-			withThumb: {
 				include: [{
 					model: Thumb,
 					attributes: ['file_name', 'original_name', 'url']
-				}]
-			},
+				}],
 			where: {
 				id: filter.id,
 				deleted_at: null

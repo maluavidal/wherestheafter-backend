@@ -51,7 +51,7 @@ export default new(class PdfService {
 
 		const addressInfo = await cep(item.Event.address_cep);
 
-		const datetimeInfo = moment(item.Event.starts_at).locale('pt-BR').format("ddd, D MMM [-] YYYY [-] HH:mm");
+		const datetimeInfo = moment(item.Event.starts_at).locale('pt-BR').format("ddd, D MMM [-] YYYY [•] HH:mm");
 
 		htmlTemplate = htmlTemplate.replace('{{ qrcode }}', generateQR);
 		htmlTemplate = htmlTemplate.replace('{{ img_src }}', `data:image/png;base64,${imageToBase64}`);
