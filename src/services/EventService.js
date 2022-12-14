@@ -1,26 +1,46 @@
 import { Event, Thumb } from "../models";
+import { Op } from 'sequelize';
+import moment from 'moment';
 
 class EventService {
-	async list() {
+	async list(filter) {
+		const whereFilter = {
+			starts_at: {
+				[Op.gt]: moment(filter.start_at)
+			},
+			ends_at: {
+				[Op.lt]: moment(filter.end_date)
+			},
+		};
+
+		console.log(whereFilter, 'whereFilter')
+
+		if (filter.city) {
+			whereFilter.city = {
+				[Op.iLike]: `%${filter.city}%`
+			}
+		}
+
 		return Event.findAll({
 			include: [{
 				model: Thumb,
 				attributes: ['file_name', 'original_name', 'url']
 			}],
-			order: [['id', 'ASC']]
+			order: [['id', 'ASC']],
+			where: whereFilter
 		});
 	};
 
 	async show(id) {
+		console.log(id)
 		return Event.findOne({
-				include: [{
-					model: Thumb,
-					attributes: ['file_name', 'original_name', 'url']
-				}],
-			order: [['id', 'ASC']],
 			where: {
 				id
-			}
+			},
+			include: [{
+				model: Thumb,
+				attributes: ['file_name', 'original_name', 'url']
+			}],
 		});
 	};
 
@@ -31,7 +51,7 @@ class EventService {
 		const dataCreate = {
 			...event,
 			address_cep: cepInfo.cep,
-			address_city: cepInfo.city,
+			city: cepInfo.city,
 			starts_at: new Date(event.starts_at)
 		};
 
@@ -45,11 +65,6 @@ class EventService {
 
 			dataCreate.thumb_id = fileCreated.id;
 		}
-
-
-//  get() {
-// 	return `src/uploads/image/${this.file_name}`;
-//   },
 
 		return Event.create(dataCreate);
 	};

@@ -5,11 +5,11 @@ class SchemaValidator {
 		  req.data = Object.keys(req.body).length
 			? await schema.body.validate(req.body) : null;
 
-		  req.filter = Object.keys(req.params).length
+		  req.filter = req?.params && Object.keys(req.params).length
 			? await schema.params.validate(req.params) : null;
 
 		  req.filter = Object.keys(req.query).length ? {
-			...req.filter, ...(await schema.params.validate(req.query)),
+			...req.filter, ...(await schema.query.validate(req.query)),
 		  } : req.filter || null;
 
 		  return next();

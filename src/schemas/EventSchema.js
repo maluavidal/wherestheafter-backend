@@ -1,6 +1,14 @@
 import * as Yup from 'yup';
 
 const schema = {
+	list: {
+		query: Yup.object().shape({
+			city: Yup.string(),
+			start_at: Yup.date(),
+			end_date: Yup.date(),
+		}).noUnknown(),
+	},
+
 	store: {
 		body: Yup.object().shape({
             name: Yup.string().required(),
@@ -9,11 +17,13 @@ const schema = {
             ends_at: Yup.date(),
 			min_age: Yup.number().integer(),
 			address_cep: Yup.string().required(),
-			address: Yup.string(),
-			address_city: Yup.string(),
+			state: Yup.string().required(),
+			city: Yup.string().required(),
+			street: Yup.string(),
 			price: Yup.number(),
 			user_id: Yup.number(),
 			number: Yup.number().min(1).required(),
+			venue: Yup.string().required(),
 		}).noUnknown(),
 	},
 
@@ -35,11 +45,13 @@ const schema = {
             ends_at: Yup.date(),
 			min_age: Yup.number().integer(),
 			address_cep: Yup.string(),
-			address: Yup.string(),
-			address_city: Yup.string(),
+			state: Yup.string(),
+			city: Yup.string(),
+			street: Yup.string(),
 			price: Yup.number(),
 			user_id: Yup.number(),
 			number: Yup.number().min(1),
+			venue: Yup.string()
 		}).noUnknown(),
 	},
 

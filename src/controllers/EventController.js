@@ -10,7 +10,7 @@ class EventController extends BaseController {
 
     async index(req, res) {
         try {
-			const events = await EventService.list();
+			const events = await EventService.list(req.filter);
 
 			return this.handleSuccess(res, events);
 		} catch (error) {
@@ -74,6 +74,14 @@ class EventController extends BaseController {
 			return this.handleError(res, error);
 		}
     }
+
+	async showEvent(req, res) {
+		try {
+
+		} catch (error) {
+			return this.handleError(res,error);
+		}
+	}
 }
 
 export default new EventController();

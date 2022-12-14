@@ -158,17 +158,25 @@ module.exports = {
 					type: Sequelize.STRING,
 					allowNull: false,
 				},
+				venue: {
+					type: Sequelize.STRING,
+					allowNull: false,
+				},
+				street: {
+					type: Sequelize.STRING,
+					allowNull: true,
+				},
 				number: {
 					type: Sequelize.INTEGER,
 					allowNull: false,
 				},
-				address: {
+				city: {
 					type: Sequelize.STRING,
-					allowNull: true,
+					allowNull: false,
 				},
-				address_city: {
+				state: {
 					type: Sequelize.STRING,
-					allowNull: true,
+					allowNull: false,
 				},
 				thumb_id: {
 					type: Sequelize.INTEGER,

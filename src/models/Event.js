@@ -5,14 +5,16 @@ export default class Event extends Model {
 		super.init({
 			name: DataTypes.STRING,
 			about: DataTypes.TEXT,
-			address: DataTypes.STRING,
-			address_city: DataTypes.STRING,
+			state: DataTypes.STRING,
+			city: DataTypes.STRING,
+			street: DataTypes.STRING,
 			starts_at: DataTypes.DATE,
 			ends_at: DataTypes.DATE,
 			min_age: DataTypes.INTEGER,
 			address_cep: DataTypes.STRING,
 			price: DataTypes.DOUBLE,
 			number: DataTypes.INTEGER,
+			venue: DataTypes.STRING,
 		}, {
 			sequelize,
 			paranoid: true,
