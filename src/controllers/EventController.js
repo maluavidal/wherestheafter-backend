@@ -5,7 +5,7 @@ class EventController extends BaseController {
 	constructor() {
 		super();
 
-		this.bindActions(['index', 'show', 'store', 'update', 'delete']);
+		this.bindActions(['index', 'listCities', 'show', 'store', 'update', 'delete']);
 	};
 
     async index(req, res) {
@@ -17,6 +17,16 @@ class EventController extends BaseController {
 			return this.handleError(res, error);
 		}
     };
+
+	async listCities(req, res) {
+		try {
+			const cities = await EventService.listCities(req.filter);
+
+			return this.handleSuccess(res, cities);
+		} catch {
+			return this.handleError(res, error);
+		}
+	};
 
     async show(req, res) {
         try {

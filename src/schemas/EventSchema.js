@@ -4,8 +4,8 @@ const schema = {
 	list: {
 		query: Yup.object().shape({
 			city: Yup.string(),
-			start_at: Yup.date(),
-			end_date: Yup.date(),
+			starts_at: Yup.date(),
+			ends_at: Yup.date(),
 		}).noUnknown(),
 	},
 
@@ -22,7 +22,7 @@ const schema = {
 			street: Yup.string(),
 			price: Yup.number(),
 			user_id: Yup.number(),
-			number: Yup.number().min(1).required(),
+			number: Yup.string().min(1).required(),
 			venue: Yup.string().required(),
 		}).noUnknown(),
 	},
@@ -50,7 +50,7 @@ const schema = {
 			street: Yup.string(),
 			price: Yup.number(),
 			user_id: Yup.number(),
-			number: Yup.number().min(1),
+			number: Yup.string().min(1),
 			venue: Yup.string()
 		}).noUnknown(),
 	},

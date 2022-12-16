@@ -4,20 +4,25 @@ import moment from 'moment';
 
 class EventService {
 	async list(filter) {
-		const whereFilter = {
-			starts_at: {
-				[Op.gt]: moment(filter.start_at)
-			},
-			ends_at: {
-				[Op.lt]: moment(filter.end_date)
-			},
-		};
+		let whereFilter = {};
+		if (filter) {
+			console.log(filter)
+			if (filter.starts_at && filter.ends_at) {
+				whereFilter = {
+					starts_at: {
+						[Op.gt]: moment(filter.starts_at)
+					},
+					ends_at: {
+						[Op.lt]: moment(filter.ends_at)
+					},
+				};
+			}
 
-		console.log(whereFilter, 'whereFilter')
-
-		if (filter.city) {
-			whereFilter.city = {
-				[Op.iLike]: `%${filter.city}%`
+			if (filter.city) {
+				console.log(filter)
+				whereFilter.city = {
+					[Op.iLike]: `%${filter.city}%`
+				}
 			}
 		}
 
@@ -31,8 +36,28 @@ class EventService {
 		});
 	};
 
+	async listCities() {
+		let cities = await Event.findAll({
+			attributes: ['city']
+		});
+
+		const locations = [];
+
+		cities = cities.forEach(event => {
+			const location = event.city
+
+			if (locations.includes(location)) {
+				return;
+			} else {
+				locations.push(location)
+			}
+		});
+
+		console.log(locations)
+		return locations;
+	};
+
 	async show(id) {
-		console.log(id)
 		return Event.findOne({
 			where: {
 				id

@@ -43,6 +43,16 @@ const tokenVerify = async (req, res, next) => {
   }
 }
 
+const isProducer = (req, res, next) => {
+	if (req.userInfo.is_admin || req.params.id === req.userInfo.id) {
+		next();
+	} else {
+		return res.status(401).json({
+			errors: ['Access denied.'],
+		  });
+	}
+}
+
 const isAdmin = (req, res, next) => {
 	if (req.userInfo.is_admin) {
 		next();
@@ -55,5 +65,6 @@ const isAdmin = (req, res, next) => {
 
 export {
 	tokenVerify,
-	isAdmin
+	isAdmin,
+	isProducer
 }

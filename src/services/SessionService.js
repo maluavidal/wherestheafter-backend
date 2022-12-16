@@ -21,7 +21,10 @@ class SessionController {
 				expiresIn: process.env.TOKEN_EXPIRATION,
 			});
 
-			return token;
+			return {
+				id,
+				token
+			};
 	}
 }
 

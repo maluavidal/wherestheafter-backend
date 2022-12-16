@@ -19,7 +19,7 @@ class UserService {
 
 	async store(data) {
 		return User.create(data);
-	};s
+	};
 
 	async update({ changes, filter }) {
 		return User.update(changes, {
