@@ -1,4 +1,4 @@
-import { User } from "../models";
+import { User, Event } from "../models";
 
 class UserService {
 	async list() {
@@ -6,6 +6,15 @@ class UserService {
 			order: [['id', 'ASC']]
 		});
 	};
+
+	async profile({id}) {
+		return Event.findAll({
+			where: {
+				user_id: id,
+			},
+			paranoid: false
+		})
+	}
 
 	async show(id) {
 		const user = {

@@ -5,7 +5,7 @@ class UserController extends BaseController {
 	constructor() {
 		super();
 
-		this.bindActions(['index', 'show', 'store', 'update', 'delete']);
+		this.bindActions(['index', 'profile', 'show', 'store', 'update', 'delete']);
 	}
 
 	async index(req, res) {
@@ -17,6 +17,19 @@ class UserController extends BaseController {
 			return this.handleError(res, error);
 		}
 	};
+
+	async profile(req, res) {
+		try {
+			const filter = req.userInfo
+
+			const usersEvents = await UserService.profile(filter);
+			console.log(usersEvents);
+			return this.handleSuccess(res, usersEvents)
+
+		} catch (error) {
+			return this.handleError(res, error);
+		}
+	}
 
 	async show(req, res) {
 		try {

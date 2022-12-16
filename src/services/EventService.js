@@ -19,9 +19,14 @@ class EventService {
 			}
 
 			if (filter.city) {
-				console.log(filter)
 				whereFilter.city = {
 					[Op.iLike]: `%${filter.city}%`
+				}
+			}
+
+			if (filter.name) {
+				whereFilter.name = {
+					[Op.iLike]: `%${filter.name}%`,
 				}
 			}
 		}
@@ -32,7 +37,8 @@ class EventService {
 				attributes: ['file_name', 'original_name', 'url']
 			}],
 			order: [['id', 'ASC']],
-			where: whereFilter
+			where: whereFilter,
+			limit: 6,
 		});
 	};
 
@@ -96,10 +102,10 @@ class EventService {
 
 	update({ changes, filter }) {
 		return Event.update(changes, {
-				include: [{
-					model: Thumb,
-					attributes: ['file_name', 'original_name', 'url']
-				}],
+			include: [{
+				model: Thumb,
+				attributes: ['file_name', 'original_name', 'url']
+			}],
 			where: {
 				id: filter.id,
 				deleted_at: null

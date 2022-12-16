@@ -1,6 +1,12 @@
 import * as Yup from 'yup';
 
 const schema = {
+	profile: {
+		params: Yup.object().shape({
+			user_id: Yup.number().integer().required()
+		}).noUnknown()
+	},
+
 	store: {
 		body: Yup.object().shape({
             name: Yup.string().required(),

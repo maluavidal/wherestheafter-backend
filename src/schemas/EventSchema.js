@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 const schema = {
 	list: {
 		query: Yup.object().shape({
+			name: Yup.string().nullable(),
 			city: Yup.string(),
 			starts_at: Yup.date(),
 			ends_at: Yup.date(),
@@ -39,19 +40,19 @@ const schema = {
 		}).noUnknown(),
 
 		body: Yup.object().shape({
-            name: Yup.string(),
-            about: Yup.string(),
-            starts_at: Yup.date(),
-            ends_at: Yup.date(),
-			min_age: Yup.number().integer(),
-			address_cep: Yup.string(),
-			state: Yup.string(),
-			city: Yup.string(),
-			street: Yup.string(),
-			price: Yup.number(),
-			user_id: Yup.number(),
-			number: Yup.string().min(1),
-			venue: Yup.string()
+            name: Yup.string().required(),
+            about: Yup.string().nullable(),
+            starts_at: Yup.date().required(),
+            ends_at: Yup.date().required(),
+			min_age: Yup.number().integer().nullable(),
+			address_cep: Yup.string().nullable(),
+			state: Yup.string().required(),
+			city: Yup.string().nullable(),
+			street: Yup.string().nullable(),
+			price: Yup.number().nullable(),
+			user_id: Yup.number().nullable(),
+			number: Yup.string().min(1).nullable(),
+			venue: Yup.string().required()
 		}).noUnknown(),
 	},
 

@@ -67,9 +67,9 @@ class EventController extends BaseController {
 				}
 			};
 
-			const event = await EventService.update(options);
+			await EventService.update(options);
 
-			return this.handleSuccess(res, event);
+			return this.handleSuccess(res, true);
 		} catch (error) {
 			return this.handleError(res, error);
 		}
