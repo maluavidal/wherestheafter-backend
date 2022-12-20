@@ -67,7 +67,9 @@ export default new(class PdfService {
 
 		htmlTemplate = htmlTemplate.replace('{{ datetime }}', datetimeInfo);
 
-		const filePath = (resolve(__dirname, '..', 'uploads', 'pdf') + `/ticket-${uuidv4()}.pdf`)
+		const imageName = `/ticket-${uuidv4()}.pdf`
+
+		const filePath = (resolve(__dirname, '..', 'uploads') + imageName)
 
 		const pdfFile = await new Promise((resolve, reject) => {
             pdf.create(htmlTemplate, options).toFile(filePath, (err, buffer) => {
@@ -79,6 +81,6 @@ export default new(class PdfService {
             });
         });
 
-		return pdfFile;
+		return `http://localhost:3000${imageName}`;
 	}
 })();

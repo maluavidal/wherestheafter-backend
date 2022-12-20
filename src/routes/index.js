@@ -6,6 +6,8 @@ import ClientRoutes from './ClientRoutes';
 import SessionRoutes from './SessionRoutes';
 import EventsClientRoutes from './EventsClientRoutes';
 import PdfRoutes from './PdfRoutes';
+import UserAccessLogRoutes from './UserAccessLogRoutes';
+import RecoverPasswordRoutes from './RecoverPasswordRoutes';
 
 import multerConfig from '../config/multerConfig';
 import multer from 'multer';
@@ -22,6 +24,8 @@ class Routes extends BaseRoute {
 		this.router.use('/eventsclients', EventsClientRoutes.setup());
 		this.router.use('/thumbs', ThumbRoutes.setup());
 		this.router.use('/pdf', PdfRoutes.setup());
+		this.router.use('/user-access-logs', UserAccessLogRoutes.setup());
+		this.router.use('/recover-password', RecoverPasswordRoutes.setup());
 
 		return this.router;
 	}

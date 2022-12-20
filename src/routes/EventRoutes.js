@@ -5,6 +5,7 @@ import { tokenVerify } from '../middlewares/LoginRequired';
 
 class EventRoutes extends BaseRoute {
 	setup(upload) {
+		this.router.get('/cep', eventController.getAddress);
 		this.router.get('/', this.SchemaValidator.Validate(EventSchema.list), eventController.index);
 		this.router.get('/cities', eventController.listCities);
 		this.router.get('/:id', this.SchemaValidator.Validate(EventSchema.show), eventController.show);

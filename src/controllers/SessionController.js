@@ -14,6 +14,7 @@ class SessionController extends BaseController {
 
 			return this.handleSuccess(res, token);
 		} catch (error) {
+			console.log(error);
 			return this.handleError(res, error);
 		}
 	}

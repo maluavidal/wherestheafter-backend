@@ -5,6 +5,10 @@ class ThumbService {
 		 return Thumb.findAll();
 	};
 
+	async create(data) {
+		return Thumb.create(data)
+	}
+
 	async delete(id) {
 		const thumb = {
 			where: {

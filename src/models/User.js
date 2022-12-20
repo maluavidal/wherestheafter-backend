@@ -14,6 +14,9 @@ export default class User extends Model {
 			defaultValue: false,
 			allowNull: false
 		},
+		is_blocked: DataTypes.BOOLEAN,
+		password_reset_token: DataTypes.DATE,
+		password_reset_expires: DataTypes.DATE
 	  }, {
 		sequelize,
 		paranoid: true,

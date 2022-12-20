@@ -1,6 +1,7 @@
 import { Event, Thumb } from "../models";
 import { Op } from 'sequelize';
 import moment from 'moment';
+const cep = require('cep-promise');
 
 class EventService {
 	async list(filter) {
@@ -59,7 +60,6 @@ class EventService {
 			}
 		});
 
-		console.log(locations)
 		return locations;
 	};
 
@@ -76,7 +76,6 @@ class EventService {
 	};
 
 	async store({ event, file }) {
-		const cep = require('cep-promise');
 		const cepInfo = await cep(event.address_cep);
 
 		const dataCreate = {
@@ -87,7 +86,6 @@ class EventService {
 		};
 
 		if (file) {
-			console.log(file, 'file')
 			const fileCreated = await Thumb.create({
 				file_name: file.filename,
 				original_name: file.originalname,
@@ -123,6 +121,12 @@ class EventService {
 		await Event.destroy(event);
 
 		return true;
+	};
+
+	async getCep(cepData) {
+		const cepInfo = await cep(cepData);
+
+		return cepInfo;
 	};
 }
 

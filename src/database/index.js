@@ -6,8 +6,9 @@ import Client from '../models/Client.js';
 import Event from '../models/Event.js';
 import EventsClient from '../models/EventsClient.js';
 import Thumb from '../models/Thumb';
+import UserAccessLog from '../models/UserAccessLog.js';
 
-const models = [User, Client, Event, EventsClient, Thumb];
+const models = [User, Client, Event, EventsClient, Thumb, UserAccessLog];
 
 class Database {
   constructor(){

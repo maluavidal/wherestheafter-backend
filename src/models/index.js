@@ -3,6 +3,7 @@ import Event from "./Event";
 import Client from "./Client";
 import EventsClient from './EventsClient';
 import Thumb from "./Thumb";
+import UserAccessLog from "./UserAccessLog"
 
 export {
 	User,
@@ -10,4 +11,5 @@ export {
 	Client,
 	EventsClient,
 	Thumb,
+	UserAccessLog
 }

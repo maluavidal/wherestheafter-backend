@@ -30,7 +30,8 @@ const schema = {
             name: Yup.string(),
             email: Yup.string().email(),
 			password: Yup.string(),
-			is_admin: Yup.boolean()
+			is_admin: Yup.boolean(),
+			is_blocked: Yup.boolean()
 		}).noUnknown(),
 	},
 
