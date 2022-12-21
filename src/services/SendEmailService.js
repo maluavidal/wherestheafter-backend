@@ -1,26 +1,18 @@
-import path from 'path';
-import nodemailer from 'nodemailer';
-import hbs from 'nodemailer-express-handlebars';
+import MailService from './MailService';
 
-const transport = nodemailer.createTransport({
-	host: "smtp.mailtrap.io",
-	port: 2525,
-	auth: {
-	  user: "ef036c0c5d3c00",
-	  pass: "4bf6bc042dbc7e"
-	}
-});
+const sendEmail = (options, to) => new Promise((resolve, reject) => MailService.sendMail({
+  ...options,
+  from: 'fulltickets <naoresponda@fulltickets.com>',
+  to: [to],
+}, (error) => {
+  if (error) {
+    reject(error);
+    return;
+  }
 
-const options = {
-  viewEngine: {
-    extName: '.hbs',
-    layoutsDir: path.resolve('./src/email'),
-    defaultLayout: 'index',
-  },
-  viewPath: path.resolve('./src/email'),
-  extName: '.hbs',
+  resolve();
+}));
+
+export default {
+  sendEmail,
 };
-
-transport.use('compile', hbs(options));
-
-export default transport;

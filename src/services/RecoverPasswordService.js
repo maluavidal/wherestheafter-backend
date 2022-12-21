@@ -5,7 +5,6 @@ import bcryptjs from 'bcryptjs';
 import sendEmailService from './sendEmailService';
 import User from '../models/User'
 import UserAccessLog from '../models/UserAccessLog';
-const UserAccessLogService= require('./UserAccessLogService');
 
 class RecoverPasswordService {
 	async recoverPassword(data) {

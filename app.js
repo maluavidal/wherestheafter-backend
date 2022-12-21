@@ -13,8 +13,8 @@ class App {
 	}
 
 	middlewares() {
-		this.app.use(express.urlencoded({ extended: true }));
-		this.app.use(express.json());
+		this.app.use(express.urlencoded({limit: '25mb', extended: true}));
+		this.app.use(express.json({limit: '25mb'}));
 		this.app.use(cors());
 		this.app.use(express.static(`${__dirname}/src/uploads`));
 	}

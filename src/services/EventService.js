@@ -76,7 +76,7 @@ class EventService {
 	};
 
 	async store({ event, file }) {
-		const cepInfo = await cep(event.address_cep);
+		const cepInfo = await cep(event.cep);
 
 		const dataCreate = {
 			...event,

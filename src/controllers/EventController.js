@@ -46,7 +46,7 @@ class EventController extends BaseController {
 					...req.data,
 					user_id: req.userInfo.id,
 				},
-				file: req.file
+				file: req.body.file
 			};
 
 			const event = await EventService.store(options);

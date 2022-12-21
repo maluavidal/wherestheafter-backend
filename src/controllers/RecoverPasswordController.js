@@ -10,7 +10,8 @@ class RecoverPasswordController extends BaseController {
 
   async recovery(req, res) {
     try {
-      const user = await RecoverPasswordService.recovery(req.data);
+		console.log(req);
+      const user = await RecoverPasswordService.recoverPassword(req.data);
 
       return this.handleSuccess(res, user);
     } catch (err) {

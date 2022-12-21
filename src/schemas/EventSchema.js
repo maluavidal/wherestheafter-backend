@@ -17,7 +17,7 @@ const schema = {
             starts_at: Yup.date().required(),
             ends_at: Yup.date(),
 			min_age: Yup.number().integer(),
-			address_cep: Yup.string().required(),
+			cep: Yup.string().required(),
 			state: Yup.string().required(),
 			city: Yup.string().required(),
 			street: Yup.string(),
