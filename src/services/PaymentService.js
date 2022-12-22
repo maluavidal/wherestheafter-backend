@@ -1,10 +1,12 @@
 import { Payment } from "../models";
+import { EventsClient } from "../models";
 
 class PaymentService {
 	async list() {
 		return Payment.findAll({
 			order: [['id', 'ASC']]
 		});
+
 	};
 
 	async show(id) {
@@ -18,7 +20,14 @@ class PaymentService {
 	};
 
 	async store(data) {
-		return Payment.create(data);
+		await Payment.create(data);
+		console.log(data);
+
+		await EventsClient.create({
+			client_id: data.client_id,
+			event_id: data.event_id,
+			payment_method: data.payment_method
+		})
 	};
 
 	async delete(id) {

@@ -5,6 +5,8 @@ class EventsClient extends Model {
 	  super.init({
 		payment_method: DataTypes.STRING,
 		deleted_at: DataTypes.DATE,
+		event_id: DataTypes.NUMBER,
+		client_id: DataTypes.NUMBER
 	  }, {
 		sequelize,
 		paranoid: true,

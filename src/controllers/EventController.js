@@ -43,16 +43,20 @@ class EventController extends BaseController {
 		try {
 			const options = {
 				event: {
-					...req.data,
+					...req.body,
 					user_id: req.userInfo.id,
 				},
-				file: req.body.file
+				file: req.file
 			};
+
+			console.log('agora pc ta tentando')
+			console.log(options, 'options')
 
 			const event = await EventService.store(options);
 
 			return this.handleSuccess(res, event);
 		} catch (error) {
+			console.log('nao esta facil')
 			console.log(error, 'error')
 			return this.handleError(res, error);
 		}

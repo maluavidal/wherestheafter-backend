@@ -10,7 +10,6 @@ class RecoverPasswordController extends BaseController {
 
   async recovery(req, res) {
     try {
-		console.log(req);
       const user = await RecoverPasswordService.recoverPassword(req.data);
 
       return this.handleSuccess(res, user);

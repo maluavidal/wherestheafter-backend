@@ -12,7 +12,7 @@ module.exports = {
 				allowNull: false,
 			},
 			expiration_date: {
-				type: Sequelize.DATE,
+				type: Sequelize.STRING,
 				allowNull: false,
 			},
 			security_code: {
@@ -38,7 +38,33 @@ module.exports = {
 					key: 'id',
 				},
 				allowNull: false,
-			}
+			},
+			event_id: {
+				type: Sequelize.INTEGER,
+				references: {
+					model: 'events',
+					key: 'id',
+				},
+				allowNull: false,
+			},
+			payment_method: {
+				type: Sequelize.STRING(20),
+				allowNull: true,
+				defaultValue: null,
+			},
+			created_at: {
+				type: Sequelize.DATE,
+				allowNull: false,
+			},
+			updated_at: {
+				type: Sequelize.DATE,
+				allowNull: false,
+			},
+			deleted_at: {
+				type: Sequelize.DATE,
+				allowNull: true,
+				defaultValue: null,
+			},
 		},
 		);
 	},

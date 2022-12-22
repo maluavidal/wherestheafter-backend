@@ -27,7 +27,7 @@ class Routes extends BaseRoute {
 		this.router.use('/pdf', PdfRoutes.setup());
 		this.router.use('/user-access-logs', UserAccessLogRoutes.setup());
 		this.router.use('/recover-password', RecoverPasswordRoutes.setup());
-		// this.router.use('/payments', PaymentRoutes.setup());
+		this.router.use('/payments', PaymentRoutes.setup());
 
 		return this.router;
 	}

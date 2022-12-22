@@ -9,17 +9,20 @@ class Payment extends Model {
 		cardholder_name: DataTypes.STRING,
 		cardholder_birthdate: DataTypes.DATE,
 		cpf: DataTypes.STRING,
+		client_id: DataTypes.NUMBER,
+		event_id: DataTypes.NUMBER
 	  }, {
 		sequelize,
-		paranoid: true
+		paranoid: true,
+		tableName: 'payment_data'
 	  })
 
 	  return this;
-
 	}
 
 	static associate(models) {
-		this.belongsTo(models.Client, { foreign: 'client_id'})
+		this.belongsTo(models.Client, { foreign: 'client_id'}),
+		this.belongsTo(models.Event, { foreign: 'event_id'})
 	}
 }
 

@@ -1,34 +1,32 @@
 import { Event, Thumb } from "../models";
 import { Op } from 'sequelize';
 import moment from 'moment';
-const cep = require('cep-promise');
+import cep from 'cep-promise';
 
 class EventService {
 	async list(filter) {
 		let whereFilter = {};
-		if (filter) {
-			console.log(filter)
-			if (filter.starts_at && filter.ends_at) {
-				whereFilter = {
-					starts_at: {
-						[Op.gt]: moment(filter.starts_at)
-					},
-					ends_at: {
-						[Op.lt]: moment(filter.ends_at)
-					},
-				};
-			}
+		console.log(filter)
+		if (filter?.starts_at && filter.ends_at) {
+			whereFilter = {
+				starts_at: {
+					[Op.gt]: moment(filter.starts_at)
+				},
+				ends_at: {
+					[Op.lt]: moment(filter.ends_at)
+				},
+			};
+		}
 
-			if (filter.city) {
-				whereFilter.city = {
-					[Op.iLike]: `%${filter.city}%`
-				}
+		if (filter?.city) {
+			whereFilter.city = {
+				[Op.iLike]: `%${filter.city}%`
 			}
+		}
 
-			if (filter.name) {
-				whereFilter.name = {
-					[Op.iLike]: `%${filter.name}%`,
-				}
+		if (filter?.name) {
+			whereFilter.name = {
+				[Op.iLike]: `%${filter.name}%`,
 			}
 		}
 
@@ -39,7 +37,7 @@ class EventService {
 			}],
 			order: [['id', 'ASC']],
 			where: whereFilter,
-			limit: 6,
+			limit: 12,
 		});
 	};
 
@@ -76,15 +74,6 @@ class EventService {
 	};
 
 	async store({ event, file }) {
-		const cepInfo = await cep(event.cep);
-
-		const dataCreate = {
-			...event,
-			address_cep: cepInfo.cep,
-			city: cepInfo.city,
-			starts_at: new Date(event.starts_at)
-		};
-
 		if (file) {
 			const fileCreated = await Thumb.create({
 				file_name: file.filename,
@@ -92,10 +81,10 @@ class EventService {
 				url: file.path
 			}, { returning: true });
 
-			dataCreate.thumb_id = fileCreated.id;
+			event.thumb_id = fileCreated.id;
 		}
 
-		return Event.create(dataCreate);
+		return Event.create(event);
 	};
 
 	update({ changes, filter }) {

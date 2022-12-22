@@ -7,7 +7,7 @@ import moment from 'moment';
 import QRCode from 'qrcode';
 import { Client, Event, EventsClient, Thumb } from '../models';
 
-export default new(class PdfService {
+export default new (class PdfService {
 	async exportPDF(id) {
 		const item = await EventsClient.findOne({
             where: {

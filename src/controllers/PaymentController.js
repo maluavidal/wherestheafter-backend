@@ -30,10 +30,15 @@ class PaymentController extends BaseController {
 
     async store(req, res) {
 		try {
-			const payment = await PaymentService.store(req.data);
+			const payment = await PaymentService.store({
+				...req.data,
+				client_id: req.filter.client_id,
+				event_id: req.filter.event_id
+			});
 
 			return this.handleSuccess(res, payment);
 		} catch (error) {
+			console.log(JSON.stringify(error, null ,4));
 			return this.handleError(res, error);
 		}
     };
