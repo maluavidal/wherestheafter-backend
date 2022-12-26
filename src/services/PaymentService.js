@@ -20,14 +20,15 @@ class PaymentService {
 	};
 
 	async store(data) {
-		await Payment.create(data);
-		console.log(data);
+		const payment = await Payment.create(data);
 
 		await EventsClient.create({
 			client_id: data.client_id,
 			event_id: data.event_id,
 			payment_method: data.payment_method
 		})
+
+		return payment
 	};
 
 	async delete(id) {

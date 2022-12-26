@@ -4,7 +4,7 @@ import BaseRoute from './BaseRoute';
 
 class PdfRoutes extends BaseRoute {
 	setup() {
-		this.router.get('/:id', this.SchemaValidator.Validate(PdfSchema.index), PdfController.index);
+		this.router.post('/:payment_id', this.SchemaValidator.Validate(PdfSchema.index), PdfController.index);
 
 		return this.router;
 	}

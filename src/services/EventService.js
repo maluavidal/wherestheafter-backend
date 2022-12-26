@@ -6,7 +6,7 @@ import cep from 'cep-promise';
 class EventService {
 	async list(filter) {
 		let whereFilter = {};
-		console.log(filter)
+
 		if (filter?.starts_at && filter.ends_at) {
 			whereFilter = {
 				starts_at: {

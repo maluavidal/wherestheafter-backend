@@ -5,29 +5,46 @@ import { v4 as uuidv4 } from 'uuid';
 import cep from 'cep-promise';
 import moment from 'moment';
 import QRCode from 'qrcode';
-import { Client, Event, EventsClient, Thumb } from '../models';
+import { Client, Event, Payment, Thumb } from '../models';
 
 export default new (class PdfService {
-	async exportPDF(id) {
-		const item = await EventsClient.findOne({
-            where: {
-                id
-            },
-            include: [{
-                model: Event,
-                attributes: ['name', 'address_cep', 'starts_at', 'thumb_id', 'number', 'price'],
-            }, {
-                model: Client,
-                attributes: ['cpf', 'name'],
-            }],
-            raw: true,
-            nest: true,
-            attributes: []
-        });
 
-        if (!item) {
-            throw new Error('Ticket not found.')
-        }
+	async generatePdf(htmlTemplate, filePath, options) {
+		return await new Promise((resolve, reject) => {
+			try {
+				pdf.create(htmlTemplate, options).toFile(filePath, (err, buffer) => {
+					if (err) {
+						reject(err)
+					}
+
+					resolve(buffer.filename)
+				});
+				} catch (err) {
+					return err
+				}
+			});
+	}
+
+	async exportPDF(id) {
+		const item = await Payment.findOne({
+			where: {
+				id: id
+			},
+			include: [{
+				model: Event,
+				attributes: ['name', 'address_cep', 'starts_at', 'thumb_id', 'number', 'price'],
+			}, {
+				model: Client,
+				attributes: ['cpf', 'name'],
+			}],
+			raw: true,
+			nest: true,
+			attributes: []
+		});
+
+		if (!item) {
+			throw new Error('Ticket not found.')
+		}
 
 		const generateQR = await QRCode.toDataURL(`http://localhost:3000/${item.id}`);
 
@@ -37,15 +54,15 @@ export default new (class PdfService {
 			},
 		})
 
-		const imageToBase64 = readFileSync(image.url, {encoding: 'base64'});
+		const imageToBase64 = readFileSync(image.url, { encoding: 'base64' });
 
 		const options = {
-            type: 'pdf',
-            format: 'latter',
-            orientation: 'portrait'
-        }
+			type: 'pdf',
+			format: 'latter',
+			orientation: 'portrait'
+		}
 
-		let htmlTemplate = readFileSync('src/html/pdf.html', { encoding:'utf8' });
+		let htmlTemplate = readFileSync('src/html/pdf.html', { encoding: 'utf8' });
 
 		htmlTemplate = htmlTemplate.replace('{{ event-name }}', item.Event.name);
 
@@ -71,16 +88,8 @@ export default new (class PdfService {
 
 		const filePath = (resolve(__dirname, '..', 'uploads') + imageName)
 
-		const pdfFile = await new Promise((resolve, reject) => {
-            pdf.create(htmlTemplate, options).toFile(filePath, (err, buffer) => {
-                if (err) {
-                    reject(err)
-                }
-
-               resolve(buffer.filename)
-            });
-        });
+		await this.generatePdf(htmlTemplate, filePath, options)
 
 		return `http://localhost:3000${imageName}`;
 	}
-})();
+});

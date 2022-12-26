@@ -23,7 +23,6 @@ class UserController extends BaseController {
 			const filter = req.userInfo
 
 			const usersEvents = await UserService.profile(filter);
-			console.log(usersEvents);
 			return this.handleSuccess(res, usersEvents)
 
 		} catch (error) {

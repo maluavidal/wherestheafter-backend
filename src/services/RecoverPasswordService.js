@@ -17,7 +17,7 @@ class RecoverPasswordService {
 		});
 
 		if (!user) {
-			throw new Error('User does not exist.');
+			return true;
 		}
 
 		const token = crypto.randomBytes(20).toString('hex');
