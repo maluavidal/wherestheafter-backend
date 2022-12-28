@@ -25,6 +25,7 @@ const schema = {
 			user_id: Yup.number(),
 			number: Yup.string().min(1).required(),
 			venue: Yup.string().required(),
+			tickets_amount: Yup.number().integer().required(),
 		}).noUnknown(),
 	},
 
@@ -52,7 +53,8 @@ const schema = {
 			price: Yup.number().nullable(),
 			user_id: Yup.number().nullable(),
 			number: Yup.string().min(1).nullable(),
-			venue: Yup.string().required()
+			venue: Yup.string().required(),
+			tickets_amount: Yup.number().integer().required(),
 		}).noUnknown(),
 	},
 

@@ -11,19 +11,19 @@ const schema = {
 
 	show: {
 		params: Yup.object().shape({
-            id: Yup.number().integer().required(),
+			id: Yup.number().integer().required(),
 		}).noUnknown(),
 	},
 
 	showEvent: {
 		params: Yup.object().shape({
-            event_id: Yup.number().integer().required(),
+			event_id: Yup.number().integer().required(),
 		}).noUnknown(),
 	},
 
 	update: {
 		params: Yup.object().shape({
-            id: Yup.number().integer().required(),
+			id: Yup.number().integer().required(),
 		}).noUnknown(),
 
 		body: Yup.object().shape({
@@ -35,7 +35,7 @@ const schema = {
 
 	delete: {
 		params: Yup.object().shape({
-            id: Yup.number().integer().required(),
+			id: Yup.number().integer().required(),
 		}).noUnknown(),
 	}
 };

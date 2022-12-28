@@ -10,6 +10,7 @@ class EventsClientRoutes extends BaseRoute {
 		this.router.put('/:id', this.SchemaValidator.Validate(EventsClientSchema.update), EventsClientController.update);
 		this.router.delete('/:id', this.SchemaValidator.Validate(EventsClientSchema.delete), EventsClientController.delete);
 		this.router.post('/', this.SchemaValidator.Validate(EventsClientSchema.store), EventsClientController.store);
+		this.router.get('/daily-tickets/:event_id', this.SchemaValidator.Validate(EventsClientSchema.showEvent), EventsClientController.dailySoldTickets);
 
 		return this.router;
 	}

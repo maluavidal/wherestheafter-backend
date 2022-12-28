@@ -15,6 +15,7 @@ export default class Event extends Model {
 			price: DataTypes.DOUBLE,
 			number: DataTypes.STRING,
 			venue: DataTypes.STRING,
+			tickets_amount: DataTypes.INTEGER
 		}, {
 			sequelize,
 			paranoid: true,

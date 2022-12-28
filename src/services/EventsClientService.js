@@ -27,6 +27,16 @@ class EventsClientService {
 		return EventsClient.count(eventsClient);
 	};
 
+	async dailySoldTickets(eventId) {
+		const eventsClient = {
+			where: {
+				event_id: eventId
+			}
+		};
+
+		return EventsClient.findAll(eventsClient);
+	};
+
 	async store(data) {
 		return EventsClient.create(data);
 	};
