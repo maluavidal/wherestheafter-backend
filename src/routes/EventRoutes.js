@@ -12,6 +12,8 @@ class EventRoutes extends BaseRoute {
 		this.router.delete('/:id', tokenVerify, this.SchemaValidator.Validate(EventSchema.delete), eventController.delete);
 		this.router.put('/:id', tokenVerify, upload.single('file'), this.SchemaValidator.Validate(EventSchema.update), eventController.update);
 		this.router.post('/', tokenVerify, upload.single('file'), eventController.store);
+		this.router.get('/', tokenVerify, this.SchemaValidator.Validate(EventSchema.paginateList), eventController.paginateList);
+
 
 		return this.router;
 	}

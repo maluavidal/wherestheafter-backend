@@ -5,12 +5,22 @@ class EventController extends BaseController {
 	constructor() {
 		super();
 
-		this.bindActions(['index', 'listCities', 'show', 'store', 'update', 'delete', 'getAddress']);
+		this.bindActions(['index', 'listCities', 'show', 'store', 'update', 'delete', 'getAddress', 'paginateList']);
 	};
 
     async index(req, res) {
         try {
 			const events = await EventService.list(req.filter);
+
+			return this.handleSuccess(res, events);
+		} catch (error) {
+			return this.handleError(res, error);
+		}
+    };
+
+	async paginateList(req, res) {
+        try {
+			const events = await EventService.paginateList(req.query);
 
 			return this.handleSuccess(res, events);
 		} catch (error) {

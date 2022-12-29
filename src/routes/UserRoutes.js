@@ -7,6 +7,7 @@ class UserRoutes extends BaseRoute {
 	setup() {
 		this.router.post('/', this.SchemaValidator.Validate(userSchema.store), userController.store);
 		this.router.use(tokenVerify);
+		this.router.get('/user-profile', userController.show);
 		this.router.get('/profile', userController.profile);
 		this.router.put('/:id', isProducer, this.SchemaValidator.Validate(userSchema.update), userController.update);
 		this.router.delete('/:id', isProducer, this.SchemaValidator.Validate(userSchema.delete), userController.delete);

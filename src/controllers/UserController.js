@@ -32,8 +32,8 @@ class UserController extends BaseController {
 
 	async show(req, res) {
 		try {
-			const user = await UserService.show(req.filter.id);
-
+			const user = await UserService.show(req.userInfo);
+			console.log(user, 'user')
 			return this.handleSuccess(res, user);
 		} catch (error) {
 			return this.handleError(res, error);

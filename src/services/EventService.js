@@ -41,6 +41,38 @@ class EventService {
 		});
 	};
 
+	async paginateList(meta) {
+		try {
+			const limit = 5;
+			const offset = (meta.page - 1) * limit;
+
+			const promises = [];
+
+			promises.push(
+				Event.findAll({
+					offset,
+					limit
+				})
+			);
+
+			if (meta.page === '1') {
+				promises.push(
+					Event.count()
+				)
+			}
+
+			const [events, totalItems] = await Promise.all(promises);
+
+			return {
+				events,
+				totalItems
+			}
+		} catch (error) {
+			throw new Error(err);
+		}
+
+	}
+
 	async listCities() {
 		let cities = await Event.findAll({
 			attributes: ['city']

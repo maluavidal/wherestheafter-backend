@@ -16,7 +16,17 @@ class UserService {
 		})
 	}
 
-	async show(id) {
+	async show({id}) {
+		const user = {
+			where: {
+				id
+			}
+		};
+
+		return User.findOne(user);
+	};
+
+	async perfilInfo(id) {
 		const user = {
 			where: {
 				id
@@ -36,6 +46,7 @@ class UserService {
 				id: filter.id,
 				deleted_at: null
 			},
+			individualHooks: true,
 			returning: true
 		})
 	};

@@ -10,19 +10,25 @@ const schema = {
 		}).noUnknown(),
 	},
 
+	paginateList: {
+		query: Yup.object().shape({
+			page:Yup.number().required(),
+		}).noUnknown()
+	},
+
 	store: {
 		body: Yup.object().shape({
             name: Yup.string().required(),
-            about: Yup.string(),
+            about: Yup.string().nullable(),
             starts_at: Yup.date().required(),
-            ends_at: Yup.date(),
-			min_age: Yup.number().integer(),
-			cep: Yup.string().required(),
+            ends_at: Yup.date().nullable(),
+			min_age: Yup.number(),
+			cep: Yup.string().nullable(),
 			state: Yup.string().required(),
 			city: Yup.string().required(),
-			street: Yup.string(),
-			price: Yup.number(),
-			user_id: Yup.number(),
+			street: Yup.string().nullable(),
+			price: Yup.number().nullable(),
+			user_id: Yup.number().nullable(),
 			number: Yup.string().min(1).required(),
 			venue: Yup.string().required(),
 			tickets_amount: Yup.number().integer().required(),
