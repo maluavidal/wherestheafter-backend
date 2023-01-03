@@ -6,41 +6,40 @@ const tokenVerify = async (req, res, next) => {
 
 	if (!authorization) {
 		return res.status(401).json({
-		errors: ['Login required.'],
+			errors: ['Login required.'],
 		});
 	}
 
-  const [, token] = authorization.split(' ');
+	const [, token] = authorization.split(' ');
 
-  try {
-    const data = jwt.verify(token, process.env.TOKEN_SECRET);
-    const { id, email } = data;
+	try {
+		const data = jwt.verify(token, process.env.TOKEN_SECRET);
+		const { id } = data;
 
-    const user = await User.findOne({
-      where: {
-        id,
-        email,
-		deleted_at: null
-      },
-	  logging: true,
-	  paranoid: false,
-	  attributes: ['id', 'email', 'is_admin'],
-	  raw: true
-    });
+		console.log(data, 'data')
+		const user = await User.count({
+			where: {
+				id,
+				deleted_at: null
+			},
+			paranoid: false,
+		});
 
-    if (!user) {
-      return res.status(401).json({
-        errors: ['User is not valid.'],
-      });
-    }
+		if (!user) {
+			return res.status(401).json({
+				errors: ['User is not valid.'],
+			});
+		}
 
-    req.userInfo = user;
-    return next();
-  } catch (e) {
-    return res.status(401).json({
-      errors: ['Expired or invalid token.'],
-    });
-  }
+		req.userInfo = {
+			id
+		};
+		return next();
+	} catch (e) {
+		return res.status(401).json({
+			errors: ['Expired or invalid token.'],
+		});
+	}
 }
 
 const isProducer = (req, res, next) => {
@@ -49,7 +48,7 @@ const isProducer = (req, res, next) => {
 	} else {
 		return res.status(401).json({
 			errors: ['Access denied.'],
-		  });
+		});
 	}
 }
 
@@ -59,7 +58,7 @@ const isAdmin = (req, res, next) => {
 	} else {
 		return res.status(401).json({
 			errors: ['Access denied.'],
-		  });
+		});
 	}
 }
 

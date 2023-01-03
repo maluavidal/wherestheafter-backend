@@ -41,23 +41,30 @@ class EventService {
 		});
 	};
 
-	async paginateList(meta) {
+	async paginateList(user_id, meta) {
 		try {
-			const limit = 5;
+			const limit = 2;
 			const offset = (meta.page - 1) * limit;
 
 			const promises = [];
 
 			promises.push(
 				Event.findAll({
+					where: {
+						user_id
+					},
 					offset,
-					limit
+					limit,
 				})
 			);
 
 			if (meta.page === '1') {
 				promises.push(
-					Event.count()
+					Event.count({
+						where: {
+							user_id
+						}
+					})
 				)
 			}
 
@@ -119,17 +126,22 @@ class EventService {
 		return Event.create(event);
 	};
 
-	update({ changes, filter }) {
-		return Event.update(changes, {
-			include: [{
-				model: Thumb,
-				attributes: ['file_name', 'original_name', 'url']
-			}],
+	async update({ changes, filter, actual_user }) {
+		const eventToUpdate = await Event.findOne({
+			where: {
+				id: filter.id
+			}
+		})
+
+		if (eventToUpdate.user_id !== actual_user){
+			throw new Error('Access denied.')
+		}
+
+		return eventToUpdate.update(changes, {
 			where: {
 				id: filter.id,
 				deleted_at: null
-			},
-			returning: true
+			}
 		})
 	};
 

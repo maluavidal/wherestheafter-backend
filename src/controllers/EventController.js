@@ -20,7 +20,7 @@ class EventController extends BaseController {
 
 	async paginateList(req, res) {
         try {
-			const events = await EventService.paginateList(req.query);
+			const events = await EventService.paginateList(req.userInfo.id, req.query);
 
 			return this.handleSuccess(res, events);
 		} catch (error) {
@@ -59,14 +59,10 @@ class EventController extends BaseController {
 				file: req.file
 			};
 
-			console.log('agora pc ta tentando')
-			console.log(options, 'options')
-
 			const event = await EventService.store(options);
 
 			return this.handleSuccess(res, event);
 		} catch (error) {
-			console.log('nao esta facil')
 			console.log(error, 'error')
 			return this.handleError(res, error);
 		}
@@ -77,14 +73,16 @@ class EventController extends BaseController {
 			const options = {
 				changes: req.data,
 				filter:{
-					id: req.filter.id
-				}
+					id: req.filter.id,
+				},
+				actual_user: req.userInfo.id
 			};
 
-			await EventService.update(options);
+			const response = await EventService.update(options);
 
-			return this.handleSuccess(res, true);
+			return this.handleSuccess(res, response);
 		} catch (error) {
+			console.log(error)
 			return this.handleError(res, error);
 		}
 	}

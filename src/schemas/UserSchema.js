@@ -4,7 +4,12 @@ const schema = {
 	profile: {
 		params: Yup.object().shape({
 			user_id: Yup.number().integer().required()
-		}).noUnknown()
+		}).noUnknown(),
+		query: Yup.object().shape({
+			name: Yup.string().nullable(),
+			city: Yup.string(),
+			starts_at: Yup.date(),
+		}).noUnknown(),
 	},
 
 	store: {
@@ -23,13 +28,11 @@ const schema = {
 	},
 
 	update:{
-		params: Yup.object().shape({
-            id: Yup.number().integer().required(),
-		}).noUnknown(),
 		body: Yup.object().shape({
             name: Yup.string(),
             email: Yup.string().email(),
 			password: Yup.string(),
+			old_password: Yup.string(),
 			is_admin: Yup.boolean(),
 			is_blocked: Yup.boolean()
 		}).noUnknown(),

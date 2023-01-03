@@ -1,4 +1,7 @@
 import { User, Event } from "../models";
+import { Op } from 'sequelize';
+import moment from 'moment';
+const bcryptjs = require("bcryptjs");
 
 class UserService {
 	async list() {
@@ -7,12 +10,41 @@ class UserService {
 		});
 	};
 
-	async profile({id}) {
+	async profile(id, filter) {
+		let whereFilter = {};
+		console.log(filter, 'filter');
+		console.log(filter.starts_at, 'starts_at');
+
+		// const date = moment(filter.starts_at).format('YYYY-MM-DD HH:mm:ss');
+		// if (filter?.starts_at) {
+		// 	const date =  moment(filter.starts_at).format('YYYY-MM-DD hh:mm:ss')
+		// 	whereFilter = {
+		// 		starts_at: {
+		// 			[Op.iLike]: date
+		// 		}
+		// 	};
+		// }
+
+		// if (filter?.city) {
+		// 	whereFilter.city = {
+		// 		[Op.iLike]: `%${filter.city}%`
+		// 	}
+		// }
+
+		// if (filter?.name) {
+		// 	whereFilter.name = {
+		// 		[Op.iLike]: `%${filter.name}%`,
+		// 	}
+		// }
+
 		return Event.findAll({
 			where: {
 				user_id: id,
+				starts_at: new Date('2022-12-31 22:00:00-03'),
+				city: filter.city,
+				name: filter.name,
 			},
-			paranoid: false
+
 		})
 	}
 
@@ -37,10 +69,36 @@ class UserService {
 	};
 
 	async store(data) {
+		const user = {
+			where: {
+				email: data.email
+			},
+			raw: true
+		};
+
+		const checkExistence = await User.count(user);
+		if (checkExistence) {
+			throw new('Email ja existe')
+		}
+
 		return User.create(data);
 	};
 
 	async update({ changes, filter }) {
+		const user = await User.findOne({
+			where: {
+				id: filter.id
+			},
+			raw: true
+		})
+		console.log(changes)
+		if (changes.password) {
+			const passValid = bcryptjs.compareSync(changes.old_password, user.password_hash);
+			if (!passValid) {
+				throw new('Senha invalida.')
+			}
+		}
+
 		return User.update(changes, {
 			where: {
 				id: filter.id,

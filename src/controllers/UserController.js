@@ -20,11 +20,12 @@ class UserController extends BaseController {
 
 	async profile(req, res) {
 		try {
-			const filter = req.userInfo
+			const id = req.userInfo.id
 
-			const usersEvents = await UserService.profile(filter);
+			const usersEvents = await UserService.profile(id, req.filter, req.query);
+			console.log(req.query, 'query');
+
 			return this.handleSuccess(res, usersEvents)
-
 		} catch (error) {
 			return this.handleError(res, error);
 		}
@@ -33,7 +34,6 @@ class UserController extends BaseController {
 	async show(req, res) {
 		try {
 			const user = await UserService.show(req.userInfo);
-			console.log(user, 'user')
 			return this.handleSuccess(res, user);
 		} catch (error) {
 			return this.handleError(res, error);
@@ -55,7 +55,7 @@ class UserController extends BaseController {
 			const options = {
 				changes: req.data,
 				filter:{
-					id: req.filter.id
+					id: req.userInfo.id
 				}
 			};
 
