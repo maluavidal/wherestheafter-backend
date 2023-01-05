@@ -15,7 +15,10 @@ export default class Event extends Model {
 			price: DataTypes.DOUBLE,
 			number: DataTypes.STRING,
 			venue: DataTypes.STRING,
-			tickets_amount: DataTypes.INTEGER
+			tickets_amount: DataTypes.INTEGER,
+			status: {
+				type: DataTypes.ENUM('ongoing', 'over', 'disabled')
+			}
 		}, {
 			sequelize,
 			paranoid: true,

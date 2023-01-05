@@ -22,8 +22,10 @@ class UserController extends BaseController {
 		try {
 			const id = req.userInfo.id
 
-			const usersEvents = await UserService.profile(id, req.filter, req.query);
-			console.log(req.query, 'query');
+			const usersEvents = await UserService.profile({
+				...req.filter,
+				user_id: id
+			});
 
 			return this.handleSuccess(res, usersEvents)
 		} catch (error) {
@@ -41,13 +43,6 @@ class UserController extends BaseController {
 	};
 
 	async store(req, res) {
-		try {
-			const user = await UserService.store(req.data);
-
-			return this.handleSuccess(res, user);
-		} catch (error) {
-			return this.handleError(res, error);
-		}
 	}
 
 	async update(req, res) {

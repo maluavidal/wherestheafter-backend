@@ -13,6 +13,16 @@ const schema = {
 	paginateList: {
 		query: Yup.object().shape({
 			page:Yup.number().required(),
+			search_text: Yup.string().nullable(),
+			start_date: Yup.date().nullable(),
+			end_date: Yup.date().nullable(),
+			status: Yup.string().nullable()
+		}).noUnknown()
+	},
+
+	getAddress: {
+		query: Yup.object().shape({
+			cep:Yup.string().nullable(),
 		}).noUnknown()
 	},
 
@@ -32,6 +42,13 @@ const schema = {
 			number: Yup.string().min(1).required(),
 			venue: Yup.string().required(),
 			tickets_amount: Yup.number().integer().required(),
+			status: Yup.string().nullable(),
+			// file: Yup.object().shape({
+				// fieldname: Yup.string().required(),
+				// originalname: Yup.string().required(),
+				// mimetype: Yup.string().oneOf(['image/png', 'image/jpeg, image/jpg']).required(),
+				// filename: Yup.string().required(),
+			//   }).required()
 		}).noUnknown(),
 	},
 
@@ -61,6 +78,7 @@ const schema = {
 			number: Yup.string().min(1).nullable(),
 			venue: Yup.string().required(),
 			tickets_amount: Yup.number().integer().required(),
+			status: Yup.string().nullable()
 		}).noUnknown(),
 	},
 

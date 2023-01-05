@@ -19,11 +19,14 @@ class EventController extends BaseController {
     };
 
 	async paginateList(req, res) {
+		console.log(req.body, 'req.body')
+		console.log(req.filter, 'req.filter')
         try {
-			const events = await EventService.paginateList(req.userInfo.id, req.query);
+			const events = await EventService.paginateList(req.userInfo.id, req.filter);
 
 			return this.handleSuccess(res, events);
 		} catch (error) {
+
 			return this.handleError(res, error);
 		}
     };

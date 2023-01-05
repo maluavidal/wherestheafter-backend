@@ -42,42 +42,62 @@ class EventService {
 	};
 
 	async paginateList(user_id, meta) {
-		try {
-			const limit = 2;
-			const offset = (meta.page - 1) * limit;
+		const limit = 5;
+		const offset = (meta.page - 1) * limit;
 
-			const promises = [];
+		const promises = []
+		const whereCondition = {
+			user_id
+		};
 
-			promises.push(
-				Event.findAll({
-					where: {
-						user_id
-					},
-					offset,
-					limit,
-				})
-			);
-
-			if (meta.page === '1') {
-				promises.push(
-					Event.count({
-						where: {
-							user_id
-						}
-					})
-				)
-			}
-
-			const [events, totalItems] = await Promise.all(promises);
-
-			return {
-				events,
-				totalItems
-			}
-		} catch (error) {
-			throw new Error(err);
+		if (meta.search_text) {
+			whereCondition.name = {
+				[Op.iLike]: `%${meta.search_text}%`
+			};
 		}
 
+		if (meta.status) {
+			whereCondition.status = meta.status;
+		}
+
+		if (meta.start_date && meta.end_date) {
+			whereCondition.starts_at = {
+				[Op.between]: [new Date(meta.start_date), new Date(meta.end_date)]
+			};
+
+		} else if (meta.start_date && !meta.end_date) {
+			whereCondition.starts_at = {
+				[Op.gte]: new Date(meta.start_date)
+			};
+
+		} else if (meta.end_date && !meta.start_date) {
+			whereCondition.starts_at = {
+				[Op.lte]: new Date(meta.start_date)
+			};
+		}
+
+		promises.push(
+			Event.findAll({
+				where: whereCondition,
+				offset,
+				limit,
+			})
+		);
+
+		if (meta.page === 1) {
+			promises.push(
+				Event.count({
+					where: whereCondition
+				})
+			)
+		}
+
+		const [events, totalItems] = await Promise.all(promises);
+
+		return {
+			events,
+			totalItems
+		}
 	}
 
 	async listCities() {
@@ -118,22 +138,30 @@ class EventService {
 				file_name: file.filename,
 				original_name: file.originalname,
 				url: file.path
-			}, { returning: true });
+			});
 
 			event.thumb_id = fileCreated.id;
-		}
 
-		return Event.create(event);
-	};
+			if (event.starts_at > moment().format('DD/MM/YYYY')) {
+				event.status = 'ongoing'
+			} else if (event.ends_at < moment().format('DD/MM/YYYY')) {
+				event.status = 'over'
+			}
+
+			console.log(event);
+
+			return Event.create(event);
+		};
+	}
 
 	async update({ changes, filter, actual_user }) {
 		const eventToUpdate = await Event.findOne({
 			where: {
 				id: filter.id
 			}
-		})
+		});
 
-		if (eventToUpdate.user_id !== actual_user){
+		if (eventToUpdate.user_id !== actual_user) {
 			throw new Error('Access denied.')
 		}
 
@@ -151,6 +179,7 @@ class EventService {
 				id
 			}
 		}
+
 		await Event.destroy(event);
 
 		return true;

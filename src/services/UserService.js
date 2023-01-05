@@ -10,10 +10,8 @@ class UserService {
 		});
 	};
 
-	async profile(id, filter) {
+	async profile(filter) {
 		let whereFilter = {};
-		console.log(filter, 'filter');
-		console.log(filter.starts_at, 'starts_at');
 
 		// const date = moment(filter.starts_at).format('YYYY-MM-DD HH:mm:ss');
 		// if (filter?.starts_at) {
@@ -39,16 +37,16 @@ class UserService {
 
 		return Event.findAll({
 			where: {
-				user_id: id,
-				starts_at: new Date('2022-12-31 22:00:00-03'),
-				city: filter.city,
+				user_id: filter.user_id,
+				// starts_at: new Date('2022-12-31 22:00:00-03'),
+				// city: filter.city,
 				name: filter.name,
 			},
 
 		})
 	}
 
-	async show({id}) {
+	async show({ id }) {
 		const user = {
 			where: {
 				id
@@ -78,7 +76,7 @@ class UserService {
 
 		const checkExistence = await User.count(user);
 		if (checkExistence) {
-			throw new('Email ja existe')
+			throw new ('Email ja existe')
 		}
 
 		return User.create(data);
@@ -91,11 +89,11 @@ class UserService {
 			},
 			raw: true
 		})
-		console.log(changes)
+
 		if (changes.password) {
 			const passValid = bcryptjs.compareSync(changes.old_password, user.password_hash);
 			if (!passValid) {
-				throw new('Senha invalida.')
+				throw new ('Senha invalida.')
 			}
 		}
 
